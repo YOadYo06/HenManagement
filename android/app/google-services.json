@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "583597898110",
+    "firebase_url": "https://smart-study-desk-monitor-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "smart-study-desk-monitor",
+    "storage_bucket": "smart-study-desk-monitor.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583597898110:android:c9e407989b7728b4599b2f",
+        "android_client_info": {
+          "package_name": "com.example.env_reading"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvCplUk0WNmmRB4ITqUxken5dWRw1FgxU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
