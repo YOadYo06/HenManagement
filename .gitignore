@@ -43,3 +43,36 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Trained ML models (generated artifacts)
+trained_models/
+
+# LaTeX build artifacts
+*.aux
+*.out
+*.snm
+*.toc
+*.nav
+*.vrb
+*.pdf
+presentation/
+
+# CSV datasets (raw data)
+*.csv
+
+# Generated config/results
+mcdm_extraction_results.json
+mcdm_flutter_config.json

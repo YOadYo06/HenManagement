@@ -1,0 +1,227 @@
+{
+  "normalization": {
+    "egg_production": {
+      "Amount_of_chicken": {
+        "min": 2639.0,
+        "max": 2745.0,
+        "range": 106.0
+      },
+      "Amount_of_Feeding": {
+        "min": 170.0,
+        "max": 200.0,
+        "range": 30.0
+      },
+      "Temperature": {
+        "min": 28.5,
+        "max": 32.0,
+        "range": 3.5
+      },
+      "Humidity": {
+        "min": 46.1,
+        "max": 54.3,
+        "range": 8.199999999999996
+      },
+      "Light_Intensity": {
+        "min": 239.0,
+        "max": 381.0,
+        "range": 142.0
+      },
+      "Noise": {
+        "min": 81.0,
+        "max": 241.0,
+        "range": 160.0
+      }
+    },
+    "green_building": {
+      "indoor_temperature": {
+        "min": 18.01878126229768,
+        "max": 29.996612079433568,
+        "range": 11.977830817135889
+      },
+      "indoor_humidity": {
+        "min": 30.000465390214647,
+        "max": 69.98230813001754,
+        "range": 39.9818427398029
+      },
+      "indoor_lighting": {
+        "min": 100.04754423906712,
+        "max": 999.0142297867692,
+        "range": 898.9666855477021
+      },
+      "indoor_noise": {
+        "min": 30.00788722890284,
+        "max": 79.98366026210462,
+        "range": 49.975773033201776
+      }
+    },
+    "herbal_plant_health": {
+      "Soil_Moisture": {
+        "min": 20.30369503077312,
+        "max": 79.57788776715802,
+        "range": 59.2741927363849
+      },
+      "Humidity": {
+        "min": 30.27792138027617,
+        "max": 89.98306039716783,
+        "range": 59.705139016891664
+      },
+      "Temperature": {
+        "min": 15.12349952336024,
+        "max": 39.985343144266665,
+        "range": 24.861843620906427
+      },
+      "Light_Intensity": {
+        "min": 203.2182636042787,
+        "max": 1198.3475113929496,
+        "range": 995.1292477886709
+      }
+    },
+    "iot_air_quality": {
+      "Temperature (?C)": {
+        "min": 18.0,
+        "max": 28.0,
+        "range": 10.0
+      },
+      "Humidity (%)": {
+        "min": 30.0,
+        "max": 70.0,
+        "range": 40.0
+      },
+      "CO2 (ppm)": {
+        "min": 400.0,
+        "max": 999.99,
+        "range": 599.99
+      },
+      "Light Intensity (lux)": {
+        "min": 100.04,
+        "max": 999.99,
+        "range": 899.95
+      }
+    },
+    "smart_library": {
+      "Temperature_C": {
+        "min": 18.0,
+        "max": 30.0,
+        "range": 12.0
+      },
+      "Humidity_%": {
+        "min": 30.05,
+        "max": 69.99,
+        "range": 39.94
+      },
+      "CO2_ppm": {
+        "min": 400.0,
+        "max": 1599.0,
+        "range": 1199.0
+      },
+      "Illuminance_lux": {
+        "min": 100.0,
+        "max": 798.0,
+        "range": 698.0
+      },
+      "Noise_dB": {
+        "min": 30.01,
+        "max": 70.0,
+        "range": 39.989999999999995
+      }
+    },
+    "building_occupancy": {
+      "Temperature": {
+        "min": 19.0,
+        "max": 24.4083333333333,
+        "range": 5.4083333333332995
+      },
+      "Humidity": {
+        "min": 16.745,
+        "max": 39.5,
+        "range": 22.755
+      },
+      "Light": {
+        "min": 0.0,
+        "max": 1697.25,
+        "range": 1697.25
+      },
+      "CO2": {
+        "min": 412.75,
+        "max": 2076.5,
+        "range": 1663.75
+      },
+      "HumidityRatio": {
+        "min": 0.002674126913904,
+        "max": 0.0064760132367102,
+        "range": 0.0038018863228062
+      }
+    },
+    "user_behavior_raed": {
+      "temperature": {
+        "min": 18.36,
+        "max": 39.22,
+        "range": 20.86
+      },
+      "humidity": {
+        "min": 34.74,
+        "max": 100.54,
+        "range": 65.80000000000001
+      },
+      "noise_db": {
+        "min": 3.37819388,
+        "max": 124.1370547,
+        "range": 120.75886082
+      },
+      "light_intensity": {
+        "min": -20.55022669,
+        "max": 973.1442332,
+        "range": 993.6944598900001
+      },
+      "motion_level": {
+        "min": -4.36,
+        "max": 14.57,
+        "range": 18.93
+      }
+    },
+    "iot_mental_health": {
+      "temperature_celsius": {
+        "min": 16.338236595294134,
+        "max": 31.89714619451217,
+        "range": 15.558909599218037
+      },
+      "humidity_percent": {
+        "min": 34.376663412046895,
+        "max": 86.20793091029975,
+        "range": 51.831267498252856
+      },
+      "noise_level_db": {
+        "min": 27.25463134565606,
+        "max": 82.48644934483887,
+        "range": 55.231817999182816
+      },
+      "lighting_lux": {
+        "min": 179.21663102672596,
+        "max": 433.7051946243009,
+        "range": 254.4885635975749
+      }
+    }
+  },
+  "classes": {
+    "herbal_plant_health": [
+      "Healthy",
+      "Unhealthy"
+    ],
+    "smart_library": [
+      "Critical",
+      "Optimal",
+      "Sub Optimal"
+    ],
+    "building_occupancy": [
+      "Absent",
+      "Present"
+    ],
+    "user_behavior_raed": [
+      "eating",
+      "sleeping",
+      "stressed",
+      "studying",
+      "walking"
+    ]
+  }
+}

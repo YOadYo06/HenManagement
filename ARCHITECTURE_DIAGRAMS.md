@@ -1,0 +1,461 @@
+# Architecture & Data Flow Diagrams
+
+## Overall System Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         Flutter App                                 │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                      │
+│  ┌─────────────────────────────────────────────────────────────┐    │
+│  │  UI Layer                                                   │    │
+│  ├─────────────────────────────────────────────────────────────┤    │
+│  │  ┌──────────────────┐  ┌──────────────────────────────────┐ │    │
+│  │  │ DashboardScreen  │  │ MCDMAnalysisScreen               │ │    │
+│  │  ├──────────────────┤  ├──────────────────────────────────┤ │    │
+│  │  │ • Readings       │  │ • Weight Method Selector         │ │    │
+│  │  │ • Charts         │  │ • Scoring Method Selector        │ │    │
+│  │  │ • Alerts         │  │ • Analyze Button                 │ │    │
+│  │  └──────────────────┘  │ • MCDM Results Display           │ │    │
+│  │                        │ • Stress Prediction Display      │ │    │
+│  │                        │ • History View                   │ │    │
+│  │                        └──────────────────────────────────┘ │    │
+│  │                                                              │    │
+│  │  ┌──────────────────┐  ┌──────────────────────────────────┐ │    │
+│  │  │ MCDMScoreCard    │  │ StressPredictionCard             │ │    │
+│  │  ├──────────────────┤  ├──────────────────────────────────┤ │    │
+│  │  │ • Weight Selector│  │ • Stress Gauge                   │ │    │
+│  │  │ • Score Bars     │  │ • Stress Scale                   │ │    │
+│  │  │ • Interpretation │  │ • Recommendations                │ │    │
+│  │  └──────────────────┘  │ • History Chart                  │ │    │
+│  │                        └──────────────────────────────────┘ │    │
+│  └─────────────────────────────────────────────────────────────┘    │
+│                            ▲                                        │
+│                            │                                        │
+│  ┌─────────────────────────┴──────────────────────────────────────┐ │
+│  │  Service Layer                                                 │ │
+│  ├──────────────────────────────────────────────────────────────┬─┤ │
+│  │                                                               │ │ │
+│  │  ┌──────────────────────┐  ┌──────────────────────────────┐ │ │ │
+│  │  │ MCDMService          │  │ MCDMCalculator               │ │ │ │
+│  │  ├──────────────────────┤  ├──────────────────────────────┤ │ │ │
+│  │  │ • analyzeAndStore()  │  │ • Normalization              │ │ │ │
+│  │  │ • recentAnalysis()   │  │ • Weight Calculation (5x)    │ │ │ │
+│  │  │ • getAverageScores() │  │ • Scoring Methods (4x)       │ │ │ │
+│  │  │                      │  │ • Result Aggregation         │ │ │ │
+│  │  └──────────────────────┘  └──────────────────────────────┘ │ │ │
+│  │                                                               │ │ │
+│  │  ┌──────────────────────┐  ┌──────────────────────────────┐ │ │ │
+│  │  │StressPredictionModel │  │ FirebaseDataRepository       │ │ │ │
+│  │  ├──────────────────────┤  ├──────────────────────────────┤ │ │ │
+│  │  │ • predictStress()    │  │ • Stream readings            │ │ │ │
+│  │  │ • getInterpretation()│  │ • Stream alerts              │ │ │ │
+│  │  │ • NN/Linear Models   │  │ • Get thresholds             │ │ │ │
+│  │  └──────────────────────┘  └──────────────────────────────┘ │ │ │
+│  │                                                               │ │ │
+│  └───────────────────────────────────────────────────────────────┼─┤ │
+│                            ▲                                      │ │
+│                            │                                      │ │
+│  ┌──────────────────────────┴──────────────────────────────────┐ │ │
+│  │  Data Layer                                                 │ │ │
+│  ├─────────────────────────────────────────────────────────────┤ │ │
+│  │                                                              │ │ │
+│  │  ┌──────────────────────────────────────────────────────┐   │ │ │
+│  │  │ Data Models                                          │   │ │ │
+│  │  ├──────────────────────────────────────────────────────┤   │ │ │
+│  │  │ • Reading (Sensor Data)                              │   │ │ │
+│  │  │ • MCDMAnalysisResult                                 │   │ │ │
+│  │  │ • SensorReading                                      │   │ │ │
+│  │  │ • MCDMResult                                         │   │ │ │
+│  │  │ • StressPredictionResult                             │   │ │ │
+│  │  └──────────────────────────────────────────────────────┘   │ │ │
+│  └──────────────────────────────────────────────────────────────┼─┤ │
+│                            ▲                                      │ │
+└────────────────────────────┼──────────────────────────────────────┼─┘
+                             │                                      │
+                             │ Firebase                            │
+                             │ Database API                        │
+                             │                                      │
+                    ┌────────┴─────────┐                           │
+                    │                  │                           │
+              ┌─────▼────┐      ┌──────▼──────┐                    │
+              │ Realtime  │      │ Realtime    │                    │
+              │ Database  │      │ Database    │◄───────────────────┘
+              │ (Readings)│      │(MCDM Data)  │
+              └──────────┘      └─────────────┘
+```
+
+## MCDM Analysis Data Flow
+
+```
+Sensor Input (4 values)
+    │
+    ├─ Temperature (°C)
+    ├─ Humidity (%)
+    ├─ Noise (dB)
+    └─ Lighting (Lux)
+         ▼
+    ┌──────────────────────┐
+    │   Normalization      │
+    │   (Min-Max to [0,1])  │
+    └──────────┬───────────┘
+               ▼
+    ┌──────────────────────────────────────┐
+    │  Weight Calculation (Choose 1 of 5)  │
+    ├──────────────────────────────────────┤
+    │ ├─ STD                               │
+    │ ├─ Entropy                           │
+    │ ├─ CRITIC                            │
+    │ ├─ MEREC                             │
+    │ └─ Compromise (Average)              │
+    └──────────┬───────────────────────────┘
+               ▼
+    ┌──────────────────────────────────────┐
+    │  Scoring (Choose 1 of 4)             │
+    ├──────────────────────────────────────┤
+    │ ├─ MABAC                             │
+    │ ├─ MARCOS                            │
+    │ ├─ SPOTIS                            │
+    │ └─ COCOCOMET                         │
+    └──────────┬───────────────────────────┘
+               ▼
+    ┌──────────────────────────────────────┐
+    │  MCDM Results (0-1 scale)            │
+    ├──────────────────────────────────────┤
+    │ ├─ MABAC Score: 0.85                 │
+    │ ├─ MARCOS Score: 0.78                │
+    │ ├─ SPOTIS Score: 0.82                │
+    │ ├─ COCOCOMET Score: 0.80             │
+    │ └─ Average Score: 0.81               │
+    └──────────┬───────────────────────────┘
+               ▼
+    ┌──────────────────────────┐
+    │  Store to Firebase       │
+    │  mcdm_analysis/{id}      │
+    └──────────┬───────────────┘
+               ▼
+    ┌──────────────────────────┐
+    │  Display in UI           │
+    │  • Score Bars            │
+    │  • Interpretation        │
+    │  • Color Coding          │
+    └──────────────────────────┘
+```
+
+## Stress Prediction Flow
+
+```
+Sensor Input (4 values)
+    │
+    ├─ Temperature (°C)
+    ├─ Humidity (%)
+    ├─ Noise (dB)
+    └─ Lighting (Lux)
+         ▼
+    ┌────────────────────────────┐
+    │  Normalize with Reference  │
+    │  Ranges (configurable)     │
+    │  → [0, 1] normalized       │
+    └────────────┬───────────────┘
+                 ▼
+    ┌────────────────────────────┐
+    │  Select Model              │
+    ├────────────────────────────┤
+    │ ├─ Linear Regression       │
+    │ │   (Fast, <1ms)          │
+    │ │                          │
+    │ └─ Neural Network (MLP)    │
+    │     (More accurate)        │
+    └────────────┬───────────────┘
+                 ▼
+    ┌────────────────────────────┐
+    │  Prediction                │
+    │  → Stress Level [0-100]    │
+    └────────────┬───────────────┘
+                 ▼
+    ┌────────────────────────────┐
+    │  Interpretation            │
+    ├────────────────────────────┤
+    │ 0-15   → Very Low (🟢)     │
+    │ 15-30  → Low (🟢)          │
+    │ 30-45  → Moderate (🟡)     │
+    │ 45-60  → High (🟠)         │
+    │ 60-75  → Very High (🟠)    │
+    │ 75-100 → Critical (🔴)     │
+    └────────────┬───────────────┘
+                 ▼
+    ┌────────────────────────────┐
+    │  Store & Display           │
+    │  • Store to Firebase       │
+    │  • Display with Gauge      │
+    │  • Show Recommendations    │
+    └────────────────────────────┘
+```
+
+## Firebase Database Structure
+
+```
+study_desk_monitor/
+│
+├── readings/
+│   ├── reading_id_1
+│   │   ├── timestamp: "2024-05-01T08:00:00Z"
+│   │   ├── temperature: 22.5
+│   │   ├── humidity: 55.0
+│   │   ├── noise: 45.0
+│   │   ├── lighting: 400.0
+│   │   └── comfort_score: 75
+│   │
+│   └── reading_id_2
+│       └── ...
+│
+├── mcdm_analysis/
+│   ├── analysis_id_1
+│   │   ├── timestamp: "2024-05-01T08:00:00Z"
+│   │   ├── temperature: 22.5
+│   │   ├── humidity: 55.0
+│   │   ├── noise: 45.0
+│   │   ├── lighting: 400.0
+│   │   ├── weight_method: "compromise"
+│   │   ├── mabac_score: 0.85
+│   │   ├── marcos_score: 0.78
+│   │   ├── spotis_score: 0.82
+│   │   ├── cococomet_score: 0.80
+│   │   ├── average_score: 0.81
+│   │   ├── stress_level: 35.5
+│   │   └── stress_interpretation: "Moderate"
+│   │
+│   └── analysis_id_2
+│       └── ...
+│
+├── alerts/
+│   ├── alert_id_1
+│   │   ├── timestamp: "2024-05-01T08:15:00Z"
+│   │   ├── type: "high_noise"
+│   │   └── message: "Noise level exceeds threshold"
+│   │
+│   └── alert_id_2
+│       └── ...
+│
+└── settings/
+    └── thresholds/
+        ├── temperature_min: 18.0
+        ├── temperature_max: 28.0
+        ├── humidity_min: 30.0
+        ├── humidity_max: 70.0
+        ├── noise_max: 60.0
+        ├── lighting_min: 200.0
+        └── lighting_max: 800.0
+```
+
+## Weight Calculation Methods Comparison
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  Input: Normalized Matrix (all criteria in [0,1])           │
+└────────────────────────┬────────────────────────────────────┘
+                         │
+        ┌────────────────┼────────────────┐
+        │                │                │
+        ▼                ▼                ▼
+    ┌───────┐      ┌────────────┐   ┌─────────────┐
+    │  STD  │      │  Entropy   │   │   CRITIC    │
+    │       │      │            │   │             │
+    │Variance       │ Information    │ Variance +  │
+    │of values      │ Content        │ Correlation │
+    └───────┘      └────────────┘   └─────────────┘
+        │                │                │
+        └────────────────┼────────────────┘
+                         │
+        ┌────────────────┴────────────────┐
+        │                                 │
+        ▼                                 ▼
+    ┌─────────┐                    ┌────────────┐
+    │  MEREC  │                    │ Compromise │
+    │         │                    │            │
+    │Removal  │                    │ Average of │
+    │Effects  │                    │ all 4      │
+    └─────────┘                    │ methods    │
+                                   └────────────┘
+                                         │
+                                         ▼
+                              ┌────────────────────┐
+                              │ Normalized Weights │
+                              │ (sum = 1.0)        │
+                              └────────────────────┘
+```
+
+## Scoring Methods Comparison
+
+```
+Normalized Matrix + Weights
+         │
+         ├─────────────┬──────────────┬──────────────┬──────────────┐
+         │             │              │              │              │
+         ▼             ▼              ▼              ▼              ▼
+    ┌────────┐   ┌────────────┐ ┌─────────┐  ┌────────────┐
+    │ MABAC  │   │  MARCOS    │ │ SPOTIS  │  │ COCOCOMET  │
+    │        │   │            │ │         │  │            │
+    │ Border │   │ Ideal +    │ │Distance │  │ Power +    │
+    │Approx. │   │Anti-ideal  │ │to Ideal │  │Linear Agg. │
+    │        │   │            │ │         │  │            │
+    └───┬────┘   └────┬───────┘ └────┬────┘  └────┬───────┘
+        │              │              │            │
+        └──────────────┼──────────────┴────────────┘
+                       │
+                       ▼
+            ┌────────────────────────┐
+            │  Scores [0, 1] Range   │
+            │  0 = Poor Environment  │
+            │  1 = Best Environment  │
+            └────────────────────────┘
+                       │
+                       ▼
+            ┌────────────────────────┐
+            │ Average Score          │
+            │ (Mean of 4 methods)    │
+            └────────────────────────┘
+```
+
+## Processing Pipeline Example
+
+```
+User Input: Select Methods and Click "Analyze"
+    │
+    ├─ Weight Method: "Compromise"
+    ├─ Scoring Method: "MABAC"
+    └─ Sensor Values: Temp, Humidity, Noise, Lighting
+         │
+         ▼
+    ┌─────────────────────────────────┐
+    │ MCDMCalculator.analyzeSingleRead│
+    │                                  │
+    │ 1. Normalize sensor data        │
+    │ 2. Calculate all weights        │
+    │    (STD, Entropy, CRITIC,       │
+    │     MEREC, Compromise)          │
+    │ 3. Score with all methods       │
+    │    (MABAC, MARCOS, SPOTIS,      │
+    │     COCOCOMET)                  │
+    │ 4. Return MCDMResult            │
+    └─────────┬───────────────────────┘
+              │
+              ▼
+    ┌─────────────────────────────────┐
+    │ StressPredictionModel.predictSt.│
+    │                                  │
+    │ 1. Normalize sensor values      │
+    │ 2. Forward through NN           │
+    │ 3. Return stress [0-100]        │
+    └─────────┬───────────────────────┘
+              │
+              ▼
+    ┌─────────────────────────────────┐
+    │ MCDMService.analyzeAndStore     │
+    │                                  │
+    │ 1. Combine results              │
+    │ 2. Create MCDMAnalysisResult    │
+    │ 3. Save to Firebase             │
+    │ 4. Return result                │
+    └─────────┬───────────────────────┘
+              │
+              ▼
+    ┌─────────────────────────────────┐
+    │ UI Update                       │
+    │                                  │
+    │ 1. Display MCDM Scores          │
+    │    • Progress bars for each     │
+    │    • Average with highlight     │
+    │    • Interpretation             │
+    │                                  │
+    │ 2. Display Stress               │
+    │    • Circular gauge             │
+    │    • Stress level (0-100)       │
+    │    • Interpretation             │
+    │    • Recommendations            │
+    │                                  │
+    │ 3. Add to history               │
+    │    • Recent analyses list       │
+    │    • Timestamp                  │
+    │    • Quick stats                │
+    └─────────────────────────────────┘
+```
+
+## Widget Hierarchy
+
+```
+App (root)
+│
+├─ MaterialApp
+│  │
+│  └─ _MainApp (Scaffold with Navigation)
+│     │
+│     └─ IndexedStack (Two Screens)
+│        │
+│        ├─ DashboardScreen (Index 0)
+│        │  └─ Various existing widgets
+│        │
+│        └─ MCDMAnalysisScreen (Index 1)
+│           │
+│           ├─ WeightMethodSelector
+│           │  └─ Wrap of ChoiceChips
+│           │
+│           ├─ ScoringMethodSelector
+│           │  └─ Wrap of ChoiceChips
+│           │
+│           ├─ ElevatedButton (Analyze)
+│           │
+│           ├─ MCDMScoreCard (if result available)
+│           │  ├─ Sensor Row Items
+│           │  └─ ScoreBar widgets
+│           │
+│           ├─ StressPredictionCard (if prediction available)
+│           │  ├─ Circular Gauge
+│           │  ├─ Stress Scale
+│           │  └─ Recommendations
+│           │
+│           └─ StreamBuilder (History)
+│              └─ HistoryItem List
+```
+
+## State Management Flow
+
+```
+MCDMAnalysisScreen (StatefulWidget)
+│
+├─ _selectedWeightMethod (String)
+│  └─ Updated by WeightMethodSelector.onMethodChanged
+│
+├─ _selectedScoringMethod (ScoringMethod)
+│  └─ Updated by ScoringMethodSelector.onMethodChanged
+│
+├─ _currentAnalysis (MCDMAnalysisResult?)
+│  └─ Updated by _performAnalysis()
+│
+├─ _stressPrediction (StressPredictionResult?)
+│  └─ Updated by _performAnalysis()
+│
+├─ _isLoading (bool)
+│  └─ During Firebase operations
+│
+└─ _errorMessage (String?)
+   └─ On errors
+```
+
+## Integration Points
+
+```
+Existing App          New MCDM System
+    │                      │
+    ├─ Sensors ──────────► MCDMCalculator
+    │                      │
+    ├─ Firebase ◄──────────┤
+    │                      │
+    ├─ UI Display ◄────────┤
+    │                      │
+    └─ History ◄───────────┤
+                           │
+                  StressPredictionModel
+                  
+All connected via MCDMService
+```

@@ -1,0 +1,2382 @@
+\documentclass[12pt,a4paper,oneside]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{appendix}
+
+\definecolor{codebg}{rgb}{0.95,0.95,0.95}
+\definecolor{codeframe}{rgb}{0.8,0.8,0.8}
+\lstdefinestyle{dartstyle}{
+  backgroundcolor=\color{codebg},
+  basicstyle=\footnotesize\ttfamily,
+  literate={°}{{\textdegree}}1,
+  frame=single,
+  rulecolor=\color{codeframe},
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+  numbers=left,
+  numberstyle=\tiny,
+  columns=flexible,
+  keepspaces=true,
+  tabsize=2,
+  extendedchars=true,
+  inputencoding=utf8,
+  morekeywords={import,class,mixin,extends,implements,with,abstract,final,const,var,void,int,double,String,bool,List,Map,Set,dynamic,static,get,set,factory,async,await,return,if,else,for,while,do,switch,case,break,continue,throw,rethrow,try,catch,on,final,late,required,new,this,super,typedef,enum,is,as,in,assert,override,covariant,sync,yield,true,false,null},
+  otherkeywords={=>,..?,..},
+  keywordstyle=\color{blue},
+  stringstyle=\color{red!60!black},
+  commentstyle=\color{green!40!black},
+}
+\lstdefinestyle{pythonstyle}{
+  language=Python,
+  backgroundcolor=\color{codebg},
+  basicstyle=\footnotesize\ttfamily,
+  frame=single,
+  rulecolor=\color{codeframe},
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+  numbers=left,
+  numberstyle=\tiny,
+  columns=flexible,
+  keepspaces=true,
+  tabsize=2,
+  keywordstyle=\color{blue},
+  stringstyle=\color{red!60!black},
+  commentstyle=\color{green!40!black},
+}
+\lstdefinestyle{jsonstyle}{
+  backgroundcolor=\color{codebg},
+  basicstyle=\footnotesize\ttfamily,
+  frame=single,
+  rulecolor=\color{codeframe},
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+  numbers=left,
+  numberstyle=\tiny,
+  columns=flexible,
+  keepspaces=true,
+  tabsize=2,
+}
+\lstdefinestyle{csvstyle}{
+  backgroundcolor=\color{codebg},
+  basicstyle=\footnotesize\ttfamily,
+  frame=single,
+  rulecolor=\color{codeframe},
+  breaklines=true,
+  numbers=left,
+  numberstyle=\tiny,
+  columns=flexible,
+  keepspaces=true,
+  tabsize=2,
+}
+\lstdefinestyle{yamlstyle}{
+  language=bash,
+  backgroundcolor=\color{codebg},
+  basicstyle=\footnotesize\ttfamily,
+  frame=single,
+  rulecolor=\color{codeframe},
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+  numbers=left,
+  numberstyle=\tiny,
+  columns=flexible,
+  keepspaces=true,
+  tabsize=2,
+}
+
+\newcommand{\code}[1]{\texttt{#1}}
+
+\title{\textbf{Environmental IoT Monitoring System:\\ Comprehensive Project Report}}
+\author{
+  Project Repository: env\_reading\\
+  \texttt{C:\textbackslash Users\textbackslash YOadYo\textbackslash AndroidStudioProjects\textbackslash env\_reading}
+}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% =============================================================================
+\chapter{Project Overview}
+\label{ch:overview}
+% =============================================================================
+
+The \textbf{env\_reading} project is a full-stack Flutter-based Internet of Things (IoT) environmental monitoring application that integrates Multi-Criteria Decision Making (MCDM) methodologies, machine learning (ML) prediction models, and real-time sensor data visualization. The system processes data from eight distinct IoT sensing domains---air quality, building occupancy, egg production, green building performance, herbal plant health, indoor air quality, smart library environments, and user behavior---and produces actionable insights through scoring algorithms and predictive analytics.
+
+\section{Project Architecture}
+
+The project follows a three-tier architecture:
+
+\begin{enumerate}
+  \item \textbf{Frontend (Flutter/Dart)}: Cross-platform mobile/desktop application providing a rich user interface for sensor data visualization, real-time monitoring, model inference, and MCDM-based decision support.
+  \item \textbf{MCDM Engine (Dart/Flutter)}: A multi-criteria decision-making subsystem implementing five weighting methods (Standard Deviation, Entropy, CRITIC, MEREC, Compromise) and four scoring formulas (MABAC, MARCOS, SPOTIS, COCOCOMET) across eight datasets.
+  \item \textbf{ML Pipeline (Python)}: A comprehensive machine learning pipeline for training, evaluating, and exporting models---including XGBoost, Random Forest, Extra Trees, K-Neighbors, MLP, SVM, LightGBM, and CatBoost---into platform-optimized Dart code for on-device inference.
+\end{enumerate}
+
+\section{Key Capabilities}
+
+\begin{itemize}
+  \item Real-time environmental sensor data processing and visualization
+  \item Multi-criteria decision analysis with configurable weight methods
+  \item On-device machine learning inference (no server required)
+  \item Support for 8 distinct IoT sensing domains
+  \item 5 weight determination methods: STD, Entropy, CRITIC, MEREC, Compromise
+  \item 4 scoring formulas: MABAC, MARCOS, SPOTIS, COCOCOMET
+  \item 8 ML model types: XGBoost, Random Forest, Extra Trees, K-Neighbors, MLP, SVM, LightGBM, CatBoost
+  \item Configurable sensor thresholds and alerting
+  \item Cross-platform deployment (Android, iOS, Web, Windows, macOS, Linux)
+\end{itemize}
+
+\section{Directory Structure}
+
+The project root is located at \texttt{C:\textbackslash Users\textbackslash YOadYo\textbackslash AndroidStudioProjects\textbackslash env\_reading\textbackslash}. The top-level directory structure is:
+
+\begin{verbatim}
+env_reading/
+|-- lib/                          # Flutter application source
+|   |-- main.dart                 # Application entry point
+|   |-- app.dart                  # MaterialApp widget definition
+|   |-- firebase_options.dart     # Firebase configuration
+|   |-- models/                   # Data models (8 files)
+|   |-- services/                 # Business logic services (12 files)
+|   |-- screens/                  # UI screen widgets (4 files)
+|   |-- widgets/                  # Reusable UI components (15 files)
+|   |-- utils/                    # Utility classes (8 files)
+|   |-- generated_models/         # ML model Dart exports (8 files)
+|-- assets/                       # Static assets
+|   |-- model_normalization.json  # Normalization parameters
+|-- trained_models/               # Pickled ML models
+|-- notebooks/                    # Jupyter notebooks (2)
+|-- datasets/                     # Raw CSV data (8 files)
+|-- pubspec.yaml                  # Flutter project config
+|-- analysis_options.yaml         # Dart linter config
+|-- mcdm_flutter_config.json      # Master MCDM configuration (1102 lines)
+|-- requirements.txt              # Python dependencies
+|-- *.py                          # Python ML scripts (8 files)
+|-- *.md                          # Documentation files
+\end{verbatim}
+
+\section{Technology Stack}
+
+\begin{longtable}{p{3.5cm} p{11cm}}
+\toprule
+\textbf{Component} & \textbf{Technology} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Component} & \textbf{Technology} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Frontend Framework & Flutter 3.x (Dart 3.x) \\
+Platform Targets & Android, iOS, Web, Windows, macOS, Linux \\
+State Management & Flutter StatefulWidgets / setState \\
+Backend / DB & Firebase (optional, via firebase\_options.dart) \\
+MCDM Engine & Custom Dart implementation (STD, Entropy, CRITIC, MEREC, Compromise, MABAC, MARCOS, SPOTIS, COCOCOMET) \\
+ML Training & Python (pandas, numpy, scikit-learn, xgboost, lightgbm, catboost) \\
+ML Export & Custom Dart code generation from trained models \\
+Configuration & JSON-based configuration (mcdm\_flutter\_config.json) \\
+Tooling & pdflatex (MiKTeX), Flutter CLI, Python 3 \\
+Version Control & Git \\
+\bottomrule
+\end{longtable}
+
+% =============================================================================
+\chapter{Project Configuration}
+\label{ch:config}
+% =============================================================================
+
+\section{pubspec.yaml}
+
+The \texttt{pubspec.yaml} file defines the Flutter project metadata, dependencies, and asset configuration. It declares the project name as \code{env\_reading}, uses the \code{flutter} SDK along with \code{firebase\_core} and \code{firebase\_analytics}, and registers the \texttt{assets/} directory for bundled files, in particular \texttt{assets/model\_normalization.json}.
+
+\begin{lstlisting}[style=yamlstyle]
+name: env_reading
+description: "A new Flutter project."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  firebase_core: ^3.12.1
+  firebase_analytics: ^11.4.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/model_normalization.json
+\end{lstlisting}
+
+The SDK constraint \code{\textasciicircum{}3.5.3} ensures compatibility with Dart 3.5.3 and above. The project uses Firebase for optional analytics and core services, though the primary MCDM and ML inference engines operate entirely offline.
+
+\section{analysis\_options.yaml}
+
+The \texttt{analysis\_options.yaml} file configures the Dart static analysis and linter. It includes the recommended \code{flutter\_lints} package and excludes the \texttt{venv/} directory (Python virtual environment) from analysis.
+
+\begin{lstlisting}[style=yamlstyle]
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    - prefer_const_constructors
+    - prefer_const_declarations
+
+analyzer:
+  exclude:
+    - "venv/**"
+  errors:
+    missing_return: error
+    dead_code: warning
+\end{lstlisting}
+
+\section{requirements.txt}
+
+The \texttt{requirements.txt} file lists all Python dependencies needed for the ML training pipeline:
+
+\begin{lstlisting}[style=csvstyle]
+pandas==2.1.4
+numpy==1.26.2
+matplotlib==3.8.2
+seaborn==0.13.0
+scikit-learn==1.3.2
+scipy==1.11.4
+xgboost==2.0.1
+jupyter==1.0.0
+ipykernel==6.28.0
+\end{lstlisting}
+
+\section{Firebase Configuration}
+
+The \texttt{lib/firebase\_options.dart} file provides Firebase initialization options. It defines a \code{DefaultFirebaseOptions} class with static getters for each supported platform (Android, iOS, Web, Windows, macOS, Linux). Each platform returns a \code{FirebaseOptions} instance with the project-specific API keys, app ID, project ID, and messaging sender ID.
+
+\begin{lstlisting}[style=dartstyle]
+import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
+
+class DefaultFirebaseOptions {
+  static FirebaseOptions get currentPlatform {
+    // Returns FirebaseOptions based on platform detection
+  }
+
+  static FirebaseOptions get android => FirebaseOptions(
+    apiKey: '...',
+    appId: '...',
+    messagingSenderId: '...',
+    projectId: '...',
+    storageBucket: '...',
+  );
+
+  static FirebaseOptions get ios => FirebaseOptions(
+    apiKey: '...',
+    appId: '...',
+    messagingSenderId: '...',
+    projectId: '...',
+    storageBucket: '...',
+    iosBundleId: '...',
+  );
+
+  static FirebaseOptions get web => FirebaseOptions(
+    apiKey: '...',
+    appId: '...',
+    messagingSenderId: '...',
+    projectId: '...',
+    authDomain: '...',
+    storageBucket: '...',
+  );
+
+  static FirebaseOptions get windows => FirebaseOptions(
+    apiKey: '...',
+    appId: '...',
+    messagingSenderId: '...',
+    projectId: '...',
+    storageBucket: '...',
+  );
+
+  static FirebaseOptions get macos => FirebaseOptions(
+    apiKey: '...',
+    appId: '...',
+    messagingSenderId: '...',
+    projectId: '...',
+    storageBucket: '...',
+  );
+
+  static FirebaseOptions get linux => FirebaseOptions(
+    apiKey: '...',
+    appId: '...',
+    messagingSenderId: '...',
+    projectId: '...',
+    storageBucket: '...',
+  );
+}
+\end{lstlisting}
+
+% =============================================================================
+\chapter{Application Entry Point and Core Widgets}
+\label{ch:entry}
+% =============================================================================
+
+\section{main.dart}
+
+The application entry point initializes Firebase (if available) and launches the \code{EnvReadingApp} widget.
+
+\begin{lstlisting}[style=dartstyle]
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'firebase_options.dart';
+import 'app.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    // Firebase initialization failed -- app will work without it
+  }
+  runApp(const EnvReadingApp());
+}
+\end{lstlisting}
+
+The \code{main} function is asynchronous to support Firebase initialization. If Firebase fails to initialize (e.g., no internet or missing configuration), the app gracefully degrades and continues without Firebase services.
+
+\section{app.dart}
+
+The \code{EnvReadingApp} widget is a \code{StatelessWidget} that returns a \code{MaterialApp} with the application title, a blue color scheme, and \code{HomeScreen} as the home route.
+
+\begin{lstlisting}[style=dartstyle]
+import 'package:flutter/material.dart';
+import 'screens/home_screen.dart';
+
+class EnvReadingApp extends StatelessWidget {
+  const EnvReadingApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Env Reading',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        useMaterial3: true,
+      ),
+      home: const HomeScreen(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+\end{lstlisting}
+
+% =============================================================================
+\chapter{Data Models (lib/models/)}
+\label{ch:models}
+% =============================================================================
+
+The \texttt{lib/models/} directory contains eight data model files representing each IoT sensing domain. Each model defines the sensor attributes, factory constructors for JSON deserialization, and methods for converting model data into the format required by the MCDM engine.
+
+\section{Model Files Overview}
+
+\begin{longtable}{p{4cm} p{3cm} p{8.5cm}}
+\toprule
+\textbf{File} & \textbf{Fields} & \textbf{Purpose} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{File} & \textbf{Fields} & \textbf{Purpose} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+air\_quality\_model.dart & 9 & Indoor air quality sensor readings (temperature, humidity, CO2, PM2.5, etc.) \\
+building\_occupancy\_model.dart & 6 & Room occupancy detection (temperature, humidity, light, CO2) \\
+egg\_production\_model.dart & 7 & Poultry farm environmental monitoring \\
+green\_building\_model.dart & 10 & Green building performance metrics \\
+herbal\_plant\_health\_model.dart & 5 & Plant health environment (soil moisture, pH, light) \\
+iot\_air\_quality\_model.dart & 9 & Extended air quality monitoring \\
+smart\_library\_model.dart & 8 & Library environmental conditions \\
+user\_behavior\_model.dart & 18 & User behavior sensing (accelerometer, gyroscope, etc.) \\
+\bottomrule
+\end{longtable}
+
+\subsection{air\_quality\_model.dart}
+
+This model represents indoor air quality sensor readings with 9 fields: \code{temperature}, \code{humidity}, \code{co2}, \code{pm25}, \code{pm10}, \code{tvoc}, \code{no2}, \code{co}, and \code{o3}. Each field is a \code{double} representing the sensor measurement in appropriate units. The model provides a default constructor, \code{fromJson()} factory, \code{toJson()} method, and \code{toList()} method returning sensor values in canonical order.
+
+\begin{lstlisting}[style=dartstyle]
+class AirQualityModel {
+  final double temperature;
+  final double humidity;
+  final double co2;
+  final double pm25;
+  final double pm10;
+  final double tvoc;
+  final double no2;
+  final double co;
+  final double o3;
+
+  const AirQualityModel({
+    required this.temperature,
+    required this.humidity,
+    required this.co2,
+    required this.pm25,
+    required this.pm10,
+    required this.tvoc,
+    required this.no2,
+    required this.co,
+    required this.o3,
+  });
+
+  factory AirQualityModel.fromJson(Map<String, dynamic> json) {
+    return AirQualityModel(
+      temperature: (json['temperature'] as num).toDouble(),
+      humidity: (json['humidity'] as num).toDouble(),
+      co2: (json['co2'] as num).toDouble(),
+      pm25: (json['pm25'] as num).toDouble(),
+      pm10: (json['pm10'] as num).toDouble(),
+      tvoc: (json['tvoc'] as num).toDouble(),
+      no2: (json['no2'] as num).toDouble(),
+      co: (json['co'] as num).toDouble(),
+      o3: (json['o3'] as num).toDouble(),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'temperature': temperature,
+    'humidity': humidity,
+    'co2': co2,
+    'pm25': pm25,
+    'pm10': pm10,
+    'tvoc': tvoc,
+    'no2': no2,
+    'co': co,
+    'o3': o3,
+  };
+
+  List<double> toList() => [
+    temperature, humidity, co2, pm25, pm10, tvoc, no2, co, o3,
+  ];
+}
+\end{lstlisting}
+
+\subsection{building\_occupancy\_model.dart}
+
+This model captures room occupancy detection with 6 fields: \code{temperature}, \code{humidity}, \code{light}, \code{co2}, \code{humidityRatio}, and \code{occupancy} (integer label). It follows the same pattern with \code{fromJson}, \code{toJson}, and \code{toList} methods.
+
+\begin{lstlisting}[style=dartstyle]
+class BuildingOccupancyModel {
+  final double temperature;
+  final double humidity;
+  final double light;
+  final double co2;
+  final double humidityRatio;
+  final int occupancy;
+
+  const BuildingOccupancyModel({
+    required this.temperature,
+    required this.humidity,
+    required this.light,
+    required this.co2,
+    required this.humidityRatio,
+    required this.occupancy,
+  });
+
+  factory BuildingOccupancyModel.fromJson(Map<String, dynamic> json) {
+    return BuildingOccupancyModel(
+      temperature: (json['temperature'] as num).toDouble(),
+      humidity: (json['humidity'] as num).toDouble(),
+      light: (json['light'] as num).toDouble(),
+      co2: (json['co2'] as num).toDouble(),
+      humidityRatio: (json['humidityRatio'] as num).toDouble(),
+      occupancy: (json['occupancy'] as num).toInt(),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'temperature': temperature,
+    'humidity': humidity,
+    'co2': co2,
+    'light': light,
+    'humidityRatio': humidityRatio,
+    'occupancy': occupancy,
+  };
+
+  List<double> toList() => [
+    temperature, humidity, light, co2, humidityRatio, occupancy.toDouble(),
+  ];
+}
+\end{lstlisting}
+
+\subsection{egg\_production\_model.dart}
+
+Represents poultry farm environmental conditions with 7 fields: \code{temperature}, \code{humidity}, \code{ammonia}, \code{lightIntensity}, \code{airVelocity}, \code{co2}, and \code{productionRate}.
+
+\subsection{green\_building\_model.dart}
+
+Captures green building performance metrics with 10 fields: \code{energyConsumption}, \code{waterUsage}, \code{wasteGeneration}, \code{recyclingRate}, \code{co2Emissions}, \code{indoorTemperature}, \code{humidity}, \code{lightLevel}, \code{airQuality}, and \code{occupancy}.
+
+\subsection{herbal\_plant\_health\_model.dart}
+
+Captures environmental conditions for herbal plant health with 5 fields: \code{soilMoisture}, \code{ph}, \code{lightIntensity}, \code{temperature}, and \code{humidity}.
+
+\subsection{iot\_air\_quality\_model.dart}
+
+Extended air quality variant with 9 fields: \code{co2}, \code{co}, \code{no2}, \code{o3}, \code{pm25}, \code{pm10}, \code{temperature}, \code{humidity}, and \code{tvoc}.
+
+\subsection{smart\_library\_model.dart}
+
+Library environmental conditions with 8 fields: \code{temperature}, \code{humidity}, \code{lightIntensity}, \code{noiseLevel}, \code{co2}, \code{occupancy}, \code{airQualityIndex}, and \code{bookBorrowingRate}.
+
+\subsection{user\_behavior\_model.dart}
+
+User behavior sensing data with 18 fields: \code{accelerometerX}, \code{accelerometerY}, \code{accelerometerZ}, \code{gyroscopeX}, \code{gyroscopeY}, \code{gyroscopeZ}, \code{locationLatitude}, \code{locationLongitude}, \code{locationAltitude}, \code{batteryLevel}, \code{screenOnTime}, \code{appUsageCount}, \code{stepsCount}, \code{heartRate}, \code{caloriesBurned}, \code{sleepDuration}, \code{activityType}, and \code{stressLevel}.
+
+All models follow the identical pattern: a const constructor with required named parameters, a \code{fromJson()} factory, a \code{toJson()} method, and a \code{toList()} method. This consistent design enables the MCDM engine and ML inference service to process any dataset uniformly.
+
+% =============================================================================
+\chapter{Services Layer (lib/services/)}
+\label{ch:services}
+% =============================================================================
+
+The \texttt{lib/services/} directory contains 12 service files that implement the core business logic of the application. These services handle weight computation, scoring, data normalization, comfort analysis, model inference, and configuration management.
+
+\section{Services Overview}
+
+\begin{longtable}{p{4cm} p{11cm}}
+\toprule
+\textbf{Service File} & \textbf{Purpose} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Service File} & \textbf{Purpose} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+mcbm\_weight\_service.dart & Computes MCDM weights using 5 methods: STD, Entropy, CRITIC, MEREC, Compromise \\
+scoring\_service.dart & Computes 4 MCDM scores: MABAC, MARCOS, SPOTIS, COCOCOMET \\
+normalization\_service.dart & Handles min-max normalization for sensor data \\
+comfort\_score\_service.dart & Computes comfort scores using ASHRAE standards \\
+model\_inference\_service.dart & Runs on-device ML model inference \\
+config\_service.dart & Loads and exposes mcdm\_flutter\_config.json \\
+alert\_service.dart & Evaluates sensor thresholds and generates alerts \\
+data\_aggregation\_service.dart & Aggregates sensor data across time windows \\
+sensor\_simulation\_service.dart & Simulates sensor readings for testing \\
+model\_loading\_service.dart & Loads generated ML model parameters \\
+prediction\_service.dart & Orchestrates model predictions \\
+visualization\_service.dart & Prepares data for chart rendering \\
+\bottomrule
+\end{longtable}
+
+\section{mcbm\_weight\_service.dart}
+
+This service implements five weight determination methods essential for MCDM analysis. Each method accepts a decision matrix (rows = alternatives, columns = criteria) and returns a list of weights that sum to 1.0.
+
+\subsection{Standard Deviation (STD) Method}
+
+The STD method computes weights based on the standard deviation of each criterion across all alternatives. Criteria with higher variance receive higher weights:
+
+\begin{equation}
+w_j = \frac{\sigma_j}{\sum_{k=1}^{n} \sigma_k}
+\end{equation}
+where $\sigma_j$ is the standard deviation of criterion $j$.
+
+\subsection{Entropy Method}
+
+The Entropy method measures the amount of disorder or uncertainty in each criterion. Criteria with lower entropy (more uniform values) receive lower weights. Steps:
+\begin{enumerate}
+  \item Normalize: $p_{ij} = x_{ij} / \sum_{i=1}^{m} x_{ij}$
+  \item Compute entropy: $e_j = -\frac{1}{\ln(m)} \sum_{i=1}^{m} p_{ij} \ln(p_{ij})$
+  \item Compute weights: $w_j = (1 - e_j) / \sum_{k=1}^{n} (1 - e_k)$
+\end{enumerate}
+
+\subsection{CRITIC Method}
+
+CRITIC (Criteria Importance Through Intercriteria Correlation) considers both the standard deviation of criteria and their correlation. It gives higher weight to criteria with high contrast (standard deviation) and low correlation with other criteria.
+
+\subsection{MEREC Method}
+
+MEREC (Method based on the Removal Effects of Criteria) evaluates the impact of removing each criterion on the overall performance of alternatives. The weight is proportional to the change in performance when a criterion is removed.
+
+\subsection{Compromise Method}
+
+The Compromise method averages weights from multiple methods (Entropy, CRITIC, MEREC) to produce a balanced weight vector that avoids extreme values from any single method.
+
+\subsection{Service Implementation}
+
+\begin{lstlisting}[style=dartstyle]
+import 'dart:math';
+
+class McbmWeightService {
+  /// STD: Weights proportional to standard deviation
+  static List<double> computeStdWeights(List<List<double>> matrix) {
+    int criteriaCount = matrix[0].length;
+    List<double> stds = List.filled(criteriaCount, 0.0);
+    for (int j = 0; j < criteriaCount; j++) {
+      double mean = 0;
+      for (int i = 0; i < matrix.length; i++) mean += matrix[i][j];
+      mean /= matrix.length;
+      double variance = 0;
+      for (int i = 0; i < matrix.length; i++)
+        variance += pow(matrix[i][j] - mean, 2);
+      variance /= matrix.length;
+      stds[j] = sqrt(variance);
+    }
+    double sumStd = stds.reduce((a, b) => a + b);
+    return stds.map((s) => s / sumStd).toList();
+  }
+
+  /// Entropy method weights
+  static List<double> computeEntropyWeights(List<List<double>> matrix) {
+    int criteriaCount = matrix[0].length;
+    List<double> entropies = List.filled(criteriaCount, 0.0);
+    for (int j = 0; j < criteriaCount; j++) {
+      double sum = 0;
+      for (int i = 0; i < matrix.length; i++) sum += matrix[i][j];
+      double entropy = 0;
+      for (int i = 0; i < matrix.length; i++) {
+        double p = matrix[i][j] / sum;
+        if (p > 0) entropy += p * log(p);
+      }
+      entropy = -entropy / log(matrix.length);
+      entropies[j] = entropy;
+    }
+    double total = entropies.map((e) => 1 - e).reduce((a, b) => a + b);
+    return entropies.map((e) => (1 - e) / total).toList();
+  }
+
+  /// CRITIC method weights
+  static List<double> computeCriticWeights(List<List<double>> matrix) {
+    int criteriaCount = matrix[0].length;
+    int altCount = matrix.length;
+    List<List<double>> normalized = List.generate(altCount,
+      (_) => List.filled(criteriaCount, 0.0));
+    for (int j = 0; j < criteriaCount; j++) {
+      double minVal = matrix.map((r) => r[j]).reduce(min);
+      double maxVal = matrix.map((r) => r[j]).reduce(max);
+      double range = maxVal - minVal;
+      for (int i = 0; i < altCount; i++)
+        normalized[i][j] = (matrix[i][j] - minVal) / range;
+    }
+    List<double> stds = List.filled(criteriaCount, 0.0);
+    for (int j = 0; j < criteriaCount; j++) {
+      double mean = normalized.map((r) => r[j]).reduce((a, b) => a + b) / altCount;
+      double variance = normalized.map((r) => pow(r[j] - mean, 2))
+        .reduce((a, b) => a + b) / altCount;
+      stds[j] = sqrt(variance);
+    }
+    List<double> contrast = List.filled(criteriaCount, 0.0);
+    for (int j = 0; j < criteriaCount; j++) {
+      double sumCorr = 0;
+      for (int k = 0; k < criteriaCount; k++)
+        if (j != k) sumCorr += 1 - pearsonCorrelation(normalized, j, k);
+      contrast[j] = stds[j] * sumCorr;
+    }
+    double totalContrast = contrast.reduce((a, b) => a + b);
+    return contrast.map((c) => c / totalContrast).toList();
+  }
+
+  /// Pearson correlation between two criteria columns
+  static double pearsonCorrelation(List<List<double>> matrix, int c1, int c2) {
+    int n = matrix.length;
+    double s1 = 0, s2 = 0, s1s = 0, s2s = 0, ps = 0;
+    for (int i = 0; i < n; i++) {
+      double x = matrix[i][c1], y = matrix[i][c2];
+      s1 += x; s2 += y; s1s += x * x; s2s += y * y; ps += x * y;
+    }
+    double num = ps - (s1 * s2 / n);
+    double den = sqrt((s1s - s1 * s1 / n) * (s2s - s2 * s2 / n));
+    return den == 0 ? 0 : num / den;
+  }
+
+  /// MEREC method weights
+  static List<double> computeMerecWeights(List<List<double>> matrix) {
+    int criteriaCount = matrix[0].length;
+    int altCount = matrix.length;
+    List<List<double>> normalized = List.generate(altCount,
+      (_) => List.filled(criteriaCount, 0.0));
+    for (int j = 0; j < criteriaCount; j++) {
+      double maxVal = matrix.map((r) => r[j]).reduce(max);
+      for (int i = 0; i < altCount; i++)
+        normalized[i][j] = matrix[i][j] / maxVal;
+    }
+    List<double> s = List.filled(altCount, 0.0);
+    for (int i = 0; i < altCount; i++) {
+      s[i] = normalized[i].map((v) => log(1 - v + 1e-10))
+        .reduce((a, b) => a + b);
+      s[i] = 1 - s[i] / criteriaCount;
+    }
+    List<double> merecWeights = List.filled(criteriaCount, 0.0);
+    for (int j = 0; j < criteriaCount; j++) {
+      List<double> sPrime = List.filled(altCount, 0.0);
+      for (int i = 0; i < altCount; i++) {
+        double sum = 0;
+        for (int k = 0; k < criteriaCount; k++)
+          if (k != j) sum += log(1 - normalized[i][k] + 1e-10);
+        sPrime[i] = 1 - sum / (criteriaCount - 1);
+      }
+      double effect = List.generate(altCount,
+        (i) => (sPrime[i] - s[i]).abs()).reduce((a, b) => a + b);
+      merecWeights[j] = effect;
+    }
+    double totalEffect = merecWeights.reduce((a, b) => a + b);
+    return merecWeights.map((w) => w / totalEffect).toList();
+  }
+
+  /// Compromise: average of Entropy, CRITIC, MEREC
+  static List<double> computeCompromiseWeights(List<List<double>> matrix) {
+    List<double> e = computeEntropyWeights(matrix);
+    List<double> c = computeCriticWeights(matrix);
+    List<double> m = computeMerecWeights(matrix);
+    return List.generate(matrix[0].length, (i) => (e[i] + c[i] + m[i]) / 3);
+  }
+}
+\end{lstlisting}
+
+\section{scoring\_service.dart}
+
+The scoring service implements four MCDM scoring formulas: MABAC, MARCOS, SPOTIS, and COCOCOMET.
+
+\subsection{MABAC (Multi-Attributive Border Approximation Area Comparison)}
+
+MABAC defines a border approximation area (BAA) for each criterion. Alternatives are evaluated based on their distance from the BAA.
+
+\subsection{MARCOS}
+
+MARCOS (Measurement of Alternatives and Ranking according to Compromise Solution) defines ideal and anti-ideal solutions and measures utility degrees relative to both.
+
+\subsection{SPOTIS}
+
+SPOTIS (Stable Preference Ordering Towards Ideal Solution) computes normalized distances from the ideal solution for each alternative.
+
+\subsection{COCOCOMET}
+
+COCOCOMET computes the similarity of each alternative to an optimal composite alternative.
+
+\begin{lstlisting}[style=dartstyle]
+import 'dart:math';
+
+class ScoringService {
+  /// MABAC scoring
+  static List<double> computeMabacScore(
+      List<List<double>> matrix, List<double> weights) {
+    int altCount = matrix.length;
+    int critCount = matrix[0].length;
+    List<List<double>> norm = List.generate(altCount,
+      (_) => List.filled(critCount, 0.0));
+    for (int j = 0; j < critCount; j++) {
+      double minVal = matrix.map((r) => r[j]).reduce(min);
+      double maxVal = matrix.map((r) => r[j]).reduce(max);
+      for (int i = 0; i < altCount; i++)
+        norm[i][j] = (matrix[i][j] - minVal) / (maxVal - minVal);
+    }
+    List<List<double>> weighted = List.generate(altCount,
+      (_) => List.filled(critCount, 0.0));
+    for (int i = 0; i < altCount; i++)
+      for (int j = 0; j < critCount; j++)
+        weighted[i][j] = weights[j] * norm[i][j] + weights[j];
+    List<double> baa = List.filled(critCount, 0.0);
+    for (int j = 0; j < critCount; j++) {
+      double prod = 1;
+      for (int i = 0; i < altCount; i++) prod *= weighted[i][j];
+      baa[j] = pow(prod, 1.0 / altCount);
+    }
+    List<double> scores = List.filled(altCount, 0.0);
+    for (int i = 0; i < altCount; i++)
+      for (int j = 0; j < critCount; j++)
+        scores[i] += weighted[i][j] - baa[j];
+    return scores;
+  }
+
+  /// MARCOS scoring
+  static List<double> computeMarcosScore(
+      List<List<double>> matrix, List<double> weights) {
+    int altCount = matrix.length;
+    int critCount = matrix[0].length;
+    List<double> ideal = List.filled(critCount, 0.0);
+    List<double> antiIdeal = List.filled(critCount, double.infinity);
+    for (int j = 0; j < critCount; j++) {
+      ideal[j] = matrix.map((r) => r[j]).reduce(max);
+      antiIdeal[j] = matrix.map((r) => r[j]).reduce(min);
+    }
+    List<List<double>> extended = [antiIdeal, ...matrix, ideal];
+    List<List<double>> norm = List.generate(extended.length,
+      (_) => List.filled(critCount, 0.0));
+    for (int j = 0; j < critCount; j++)
+      for (int i = 0; i < extended.length; i++)
+        norm[i][j] = (extended[i][j] - antiIdeal[j]) /
+          (ideal[j] - antiIdeal[j] + 1e-10);
+    List<List<double>> weighted = List.generate(extended.length,
+      (_) => List.filled(critCount, 0.0));
+    for (int i = 0; i < extended.length; i++)
+      for (int j = 0; j < critCount; j++)
+        weighted[i][j] = norm[i][j] * weights[j];
+    double sumIdeal = weighted.last.reduce((a, b) => a + b);
+    double sumAntiIdeal = weighted.first.reduce((a, b) => a + b);
+    List<double> scores = List.filled(altCount, 0.0);
+    for (int i = 0; i < altCount; i++) {
+      double sumAlt = weighted[i + 1].reduce((a, b) => a + b);
+      double kPlus = sumAlt / sumIdeal;
+      double kMinus = sumAlt / sumAntiIdeal;
+      scores[i] = (kPlus + kMinus) /
+        (1 + (1 - kPlus) / kPlus + (1 - kMinus) / kMinus);
+    }
+    return scores;
+  }
+
+  /// SPOTIS scoring
+  static List<double> computeSpotisScore(
+      List<List<double>> matrix, List<double> weights) {
+    int altCount = matrix.length;
+    int critCount = matrix[0].length;
+    List<double> ideal = List.filled(critCount, 0.0);
+    List<double> antiIdeal = List.filled(critCount, double.infinity);
+    for (int j = 0; j < critCount; j++) {
+      ideal[j] = matrix.map((r) => r[j]).reduce(max);
+      antiIdeal[j] = matrix.map((r) => r[j]).reduce(min);
+    }
+    List<double> scores = List.filled(altCount, 0.0);
+    for (int i = 0; i < altCount; i++) {
+      for (int j = 0; j < critCount; j++) {
+        double range = ideal[j] - antiIdeal[j];
+        scores[i] += weights[j] *
+          (matrix[i][j] - ideal[j]).abs() / (range + 1e-10);
+      }
+    }
+    return scores;
+  }
+
+  /// COCOCOMET scoring
+  static List<double> computeCocometScore(
+      List<List<double>> matrix, List<double> weights) {
+    int altCount = matrix.length;
+    int critCount = matrix[0].length;
+    List<List<double>> norm = List.generate(altCount,
+      (_) => List.filled(critCount, 0.0));
+    for (int j = 0; j < critCount; j++) {
+      double mn = matrix.map((r) => r[j]).reduce(min);
+      double mx = matrix.map((r) => r[j]).reduce(max);
+      for (int i = 0; i < altCount; i++)
+        norm[i][j] = (matrix[i][j] - mn) / (mx - mn);
+    }
+    List<double> optimal = List.generate(critCount,
+      (j) => List.generate(altCount, (i) => norm[i][j]).reduce(max));
+    List<double> scores = List.filled(altCount, 0.0);
+    for (int i = 0; i < altCount; i++) {
+      double similarity = 0;
+      for (int j = 0; j < critCount; j++)
+        similarity += weights[j] * (1 - (optimal[j] - norm[i][j]).abs());
+      scores[i] = similarity;
+    }
+    return scores;
+  }
+}
+\end{lstlisting}
+
+\section{normalization\_service.dart}
+
+Provides min-max normalization across all sensor domains. Loads normalization parameters from \texttt{model\_normalization.json}.
+
+\begin{lstlisting}[style=dartstyle]
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
+
+class NormalizationService {
+  Map<String, Map<String, double>>? _normParams;
+
+  Future<void> loadNormalizationParams() async {
+    String jsonStr = await rootBundle
+      .loadString('assets/model_normalization.json');
+    Map<String, dynamic> json = jsonDecode(jsonStr);
+    _normParams = json.map((key, value) => MapEntry(key,
+      Map<String, double>.from((value as Map)
+        .map((k, v) => MapEntry(k.toString(), (v as num).toDouble())))));
+  }
+
+  Map<String, double>? getNormParams(String datasetId) =>
+    _normParams?[datasetId];
+
+  List<double> normalize(List<double> values,
+      List<double> mins, List<double> maxs) {
+    return List.generate(values.length, (i) {
+      double range = maxs[i] - mins[i];
+      if (range == 0) return 0.5;
+      return (values[i] - mins[i]) / range;
+    });
+  }
+
+  List<double> denormalize(List<double> values,
+      List<double> mins, List<double> maxs) {
+    return List.generate(values.length, (i) =>
+      values[i] * (maxs[i] - mins[i]) + mins[i]);
+  }
+}
+\end{lstlisting}
+
+\section{comfort\_score\_service.dart}
+
+Implements thermal comfort calculations based on ASHRAE Standard 55. Computes PMV (Predicted Mean Vote) and PPD (Predicted Percentage of Dissatisfied).
+
+\begin{lstlisting}[style=dartstyle]
+import 'dart:math';
+
+class ComfortScoreService {
+  static double computePmv(double temperature, double humidity,
+      {double airVelocity = 0.1, double metabolicRate = 1.2,
+       double clothingInsulation = 0.5}) {
+    double pa = humidity * 10;
+    double ta = temperature, icl = clothingInsulation;
+    double m = metabolicRate, v = airVelocity;
+    double fcl = icl <= 0.078
+      ? 1.0 + 1.29 * icl : 1.05 + 0.645 * icl;
+    double hcf = 12.1 * sqrt(v);
+    double taa = ta + 273;
+    double tclA = taa + (35.5 - ta) / (3.5 * icl + 0.1);
+    return (0.303 * exp(-0.036 * m) + 0.028) * (
+      (m * 58.15) - 3.05e-3 * (5733 - 6.99 * m * 58.15 - pa)
+      - 0.42 * (m * 58.15 - 58.15)
+      - 1.7e-5 * m * 58.15 * (5867 - pa)
+      - 0.0014 * m * 58.15 * (34 - ta)
+      - 3.96e-8 * fcl * (pow(tclA, 4) - pow(taa, 4))
+      - fcl * hcf * (tclA - taa));
+  }
+
+  static double computePpd(double pmv) =>
+    100 - 95 * exp(-0.03353 * pow(pmv, 4) - 0.2179 * pow(pmv, 2));
+
+  static double computeComfortScore(double temperature, double humidity,
+      {List<double> idealTemp = const [20, 26],
+       List<double> idealHumidity = const [30, 60]}) {
+    double ts = (temperature >= idealTemp[0] && temperature <= idealTemp[1])
+      ? 100 : 100 * (1 - (temperature - idealTemp[0]).abs() /
+        (idealTemp[1] - idealTemp[0]).clamp(1, double.infinity));
+    double hs = (humidity >= idealHumidity[0] && humidity <= idealHumidity[1])
+      ? 100 : 100 * (1 - (humidity - idealHumidity[0]).abs() /
+        (idealHumidity[1] - idealHumidity[0]).clamp(1, double.infinity));
+    return (ts + hs) / 2;
+  }
+}
+\end{lstlisting}
+
+\section{model\_inference\_service.dart}
+
+Provides a unified interface for running ML model predictions across all generated model types.
+
+\begin{lstlisting}[style=dartstyle]
+import '../generated_models/egg_production.dart';
+import '../generated_models/green_building.dart';
+import '../generated_models/herbal_plant_health.dart';
+import '../generated_models/iot_air_quality.dart';
+import '../generated_models/smart_library.dart';
+import '../generated_models/building_occupancy.dart';
+import '../generated_models/user_behavior_raed.dart';
+import '../generated_models/iot_mental_health.dart';
+
+class ModelInferenceService {
+  static double predict(String datasetId, List<double> features) {
+    switch (datasetId) {
+      case 'egg_production':
+        return EggProductionModel.predict(features);
+      case 'green_building':
+        return GreenBuildingModel.predict(features);
+      case 'herbal_plant_health':
+        return HerbalPlantHealthModel.predict(features);
+      case 'iot_air_quality':
+        return IotAirQualityModel.predict(features);
+      case 'smart_library':
+        return SmartLibraryModel.predict(features);
+      case 'building_occupancy':
+        return BuildingOccupancyModel.predict(features);
+      case 'user_behavior_raed':
+        return UserBehaviorRaedModel.predict(features);
+      case 'iot_mental_health':
+        return IotMentalHealthModel.predict(features);
+      default:
+        throw ArgumentError('Unknown dataset: $datasetId');
+    }
+  }
+}
+\end{lstlisting}
+
+\section{config\_service.dart}
+
+Loads \texttt{mcdm\_flutter\_config.json} and provides typed access to all configuration values.
+
+\begin{lstlisting}[style=dartstyle]
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
+
+class ConfigService {
+  static Map<String, dynamic>? _config;
+
+  static Future<void> loadConfig() async {
+    String jsonStr = await rootBundle
+      .loadString('mcdm_flutter_config.json');
+    _config = jsonDecode(jsonStr);
+  }
+
+  static Map<String, dynamic>? get config => _config;
+  static List<Map<String, dynamic>> get datasets =>
+    List<Map<String, dynamic>>.from(_config?['datasets'] ?? []);
+
+  static Map<String, dynamic>? getDataset(String id) {
+    for (var ds in datasets) {
+      if (ds['id'] == id) return ds;
+    }
+    return null;
+  }
+
+  static List<Map<String, dynamic>>? getSensors(String datasetId) {
+    var ds = getDataset(datasetId);
+    return ds != null
+      ? List<Map<String, dynamic>>.from(ds['sensors'] ?? []) : null;
+  }
+
+  static Map<String, dynamic>? getModelConfig(String datasetId) {
+    var ds = getDataset(datasetId);
+    return ds?['modelConfig'] as Map<String, dynamic>?;
+  }
+}
+\end{lstlisting}
+
+\section{alert\_service.dart}
+
+Evaluates sensor readings against configurable thresholds and generates alerts when values exceed safe ranges. Three severity levels: info, warning, critical.
+
+\begin{lstlisting}[style=dartstyle]
+class Alert {
+  final String sensorName;
+  final double value;
+  final double threshold;
+  final AlertSeverity severity;
+  final DateTime timestamp;
+  final String message;
+
+  Alert({required this.sensorName, required this.value,
+    required this.threshold, required this.severity,
+    required this.message}) : timestamp = DateTime.now();
+}
+
+enum AlertSeverity { info, warning, critical }
+
+class AlertService {
+  final List<Alert> _alerts = [];
+  final Map<String, Map<String, double>> _thresholds = {};
+
+  void setThreshold(String ds, String s, double min, double max) {
+    _thresholds.putIfAbsent(ds, () => {});
+    _thresholds[ds]!['${s}_min'] = min;
+    _thresholds[ds]!['${s}_max'] = max;
+  }
+
+  List<Alert> evaluate(String ds, Map<String, double> readings) {
+    List<Alert> newAlerts = [];
+    var t = _thresholds[ds];
+    if (t == null) return newAlerts;
+    readings.forEach((sensor, value) {
+      double? mn = t['${sensor}_min'];
+      double? mx = t['${sensor}_max'];
+      if (mn != null && value < mn)
+        newAlerts.add(Alert(sensorName: sensor, value: value,
+          threshold: mn, severity: AlertSeverity.warning,
+          message: '$sensor below min: $value < $mn'));
+      if (mx != null && value > mx)
+        newAlerts.add(Alert(sensorName: sensor, value: value,
+          threshold: mx,
+          severity: value > mx * 1.5
+            ? AlertSeverity.critical : AlertSeverity.warning,
+          message: '$sensor exceeds max: $value > $mx'));
+    });
+    _alerts.addAll(newAlerts);
+    return newAlerts;
+  }
+
+  List<Alert> getRecentAlerts({int? limit}) {
+    var sorted = List<Alert>.from(_alerts)
+      ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
+    return limit != null ? sorted.take(limit).toList() : sorted;
+  }
+
+  void clearAlerts() => _alerts.clear();
+}
+\end{lstlisting}
+
+\section{data\_aggregation\_service.dart}
+
+Provides time-window based aggregation functions: mean, median, min, max, standard deviation.
+
+\begin{lstlisting}[style=dartstyle]
+import 'dart:math';
+
+enum AggregationMethod { mean, median, min, max, stdDev }
+
+class DataAggregationService {
+  static double aggregate(List<double> values, AggregationMethod m) {
+    switch (m) {
+      case AggregationMethod.mean:
+        return values.reduce((a, b) => a + b) / values.length;
+      case AggregationMethod.median:
+        var sorted = List<double>.from(values)..sort();
+        int mid = sorted.length ~/ 2;
+        return sorted.length % 2 == 0
+          ? (sorted[mid - 1] + sorted[mid]) / 2 : sorted[mid];
+      case AggregationMethod.min:
+        return values.reduce(min);
+      case AggregationMethod.max:
+        return values.reduce(max);
+      case AggregationMethod.stdDev:
+        double mean = values.reduce((a, b) => a + b) / values.length;
+        return sqrt(values
+          .map((v) => pow(v - mean, 2)).reduce((a, b) => a + b)
+          / values.length);
+    }
+  }
+
+  static Map<String, double> aggregateReadings(
+      List<Map<String, double>> readings, AggregationMethod m) {
+    if (readings.isEmpty) return {};
+    return readings.first.keys.map((key) {
+      var vals = readings.map((r) => r[key]!).toList();
+      return MapEntry(key, aggregate(vals, m));
+    }).toMap();
+  }
+}
+\end{lstlisting}
+
+\section{sensor\_simulation\_service.dart}
+
+Generates realistic simulated sensor data for testing using configurable ranges and noise.
+
+\begin{lstlisting}[style=dartstyle]
+import 'dart:math';
+
+class SensorSimulationService {
+  final Random _random = Random();
+
+  double _noise(double base, double factor) =>
+    base + (_random.nextDouble() - 0.5) * 2 * factor;
+
+  Map<String, double> simulate(String datasetId) {
+    switch (datasetId) {
+      case 'air_quality': return {
+        'temperature': _noise(24, 2), 'humidity': _noise(55, 10),
+        'co2': _noise(450, 100), 'pm25': _noise(12, 8),
+        'pm10': _noise(25, 15), 'tvoc': _noise(0.5, 0.3),
+        'no2': _noise(20, 10), 'co': _noise(0.4, 0.3),
+        'o3': _noise(30, 15),
+      };
+      case 'building_occupancy': return {
+        'temperature': _noise(23, 1.5), 'humidity': _noise(50, 8),
+        'light': _noise(300, 100), 'co2': _noise(500, 150),
+        'humidityRatio': _noise(0.008, 0.002),
+        'occupancy': _random.nextDouble() < 0.6 ? 1.0 : 0.0,
+      };
+      case 'egg_production': return {
+        'temperature': _noise(28, 3), 'humidity': _noise(60, 10),
+        'ammonia': _noise(10, 5), 'lightIntensity': _noise(50, 20),
+        'airVelocity': _noise(0.5, 0.3), 'co2': _noise(800, 200),
+        'productionRate': _noise(85, 10),
+      };
+      case 'green_building': return {
+        'energyConsumption': _noise(250, 50),
+        'waterUsage': _noise(150, 40),
+        'wasteGeneration': _noise(50, 20),
+        'recyclingRate': _noise(35, 10),
+        'co2Emissions': _noise(200, 50),
+        'indoorTemperature': _noise(23, 2),
+        'humidity': _noise(50, 8), 'lightLevel': _noise(400, 150),
+        'airQuality': _noise(80, 15), 'occupancy': _noise(0.6, 0.3),
+      };
+      case 'herbal_plant_health': return {
+        'soilMoisture': _noise(60, 15), 'ph': _noise(6.5, 0.5),
+        'lightIntensity': _noise(300, 100),
+        'temperature': _noise(25, 3), 'humidity': _noise(65, 10),
+      };
+      case 'smart_library': return {
+        'temperature': _noise(22, 1.5), 'humidity': _noise(45, 7),
+        'lightIntensity': _noise(350, 100),
+        'noiseLevel': _noise(35, 10), 'co2': _noise(450, 100),
+        'occupancy': _noise(50, 20),
+        'airQualityIndex': _noise(80, 12),
+        'bookBorrowingRate': _noise(15, 5),
+      };
+      case 'user_behavior_raed': return {
+        'accelerometerX': _noise(0, 1), 'accelerometerY': _noise(0, 1),
+        'accelerometerZ': _noise(-9.8, 0.5),
+        'gyroscopeX': _noise(0, 0.5), 'gyroscopeY': _noise(0, 0.5),
+        'gyroscopeZ': _noise(0, 0.5), 'batteryLevel': _noise(75, 15),
+        'screenOnTime': _noise(180, 60),
+        'stepsCount': _noise(5000, 2000), 'heartRate': _noise(72, 10),
+        'stressLevel': _noise(40, 15),
+      };
+      default: return {};
+    }
+  }
+}
+\end{lstlisting}
+
+\section{model\_loading\_service.dart \& prediction\_service.dart}
+
+\texttt{ModelLoadingService} provides factory instantiation of generated models. \texttt{PredictionService} orchestrates the full pipeline: normalize, predict, interpret.
+
+\begin{lstlisting}[style=dartstyle]
+class PredictionService {
+  final NormalizationService _normService;
+  PredictionService(this._normService);
+
+  Map<String, dynamic> predict(String datasetId, List<double> features) {
+    var normParams = _normService.getNormParams(datasetId);
+    List<double> normalizedFeatures;
+    if (normParams != null) {
+      List<double> mins = normParams.entries
+        .where((e) => e.key.endsWith('_min')).map((e) => e.value).toList();
+      List<double> maxs = normParams.entries
+        .where((e) => e.key.endsWith('_max')).map((e) => e.value).toList();
+      normalizedFeatures = _normService.normalize(features, mins, maxs);
+    } else {
+      normalizedFeatures = features;
+    }
+    double prediction = ModelInferenceService.predict(
+      datasetId, normalizedFeatures);
+    return {
+      'prediction': prediction,
+      'confidence': (prediction / 100.0).clamp(0.0, 1.0),
+      'datasetId': datasetId,
+      'timestamp': DateTime.now().toIso8601String(),
+    };
+  }
+}
+\end{lstlisting}
+
+\section{visualization\_service.dart}
+
+Prepares sensor and MCDM data for chart rendering (time series, radar, bar, comparison).
+
+\begin{lstlisting}[style=dartstyle]
+class VisualizationService {
+  static List<Map<String, dynamic>> prepareTimeSeries(
+      List<Map<String, dynamic>> data,
+      {String xField = 'timestamp', String yField = 'value'}) =>
+    data.map((d) => {'x': d[xField], 'y': d[yField]}).toList();
+
+  static List<Map<String, dynamic>> prepareRadarChart(
+      Map<String, double> readings) =>
+    readings.entries
+      .map((e) => {'axis': e.key, 'value': e.value}).toList();
+
+  static List<Map<String, dynamic>> prepareBarChart(
+      List<double> scores, List<String> labels) =>
+    List.generate(scores.length,
+      (i) => {'label': labels[i], 'value': scores[i]});
+
+  static Map<String, List<double>> prepareComparison(
+      List<String> datasets, List<List<double>> scores) {
+    Map<String, List<double>> result = {};
+    for (int i = 0; i < datasets.length; i++)
+      result[datasets[i]] = scores[i];
+    return result;
+  }
+}
+\end{lstlisting}
+
+% =============================================================================
+\chapter{Screen Layer (lib/screens/)}
+\label{ch:screens}
+% =============================================================================
+
+The \texttt{lib/screens/} directory contains four screen widgets defining the application's UI views.
+
+\section{home\_screen.dart}
+
+Main dashboard displaying 8 dataset cards with navigation to detail views and settings.
+
+\begin{lstlisting}[style=dartstyle]
+import 'package:flutter/material.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final List<Map<String, String>> _datasets = [
+    {'id': 'air_quality', 'name': 'Air Quality', 'icon': 'air'},
+    {'id': 'building_occupancy', 'name': 'Building Occupancy', 'icon': 'building'},
+    {'id': 'egg_production', 'name': 'Egg Production', 'icon': 'egg'},
+    {'id': 'green_building', 'name': 'Green Building', 'icon': 'leaf'},
+    {'id': 'herbal_plant_health', 'name': 'Herbal Plant Health', 'icon': 'plant'},
+    {'id': 'smart_library', 'name': 'Smart Library', 'icon': 'library'},
+    {'id': 'user_behavior_raed', 'name': 'User Behavior', 'icon': 'person'},
+    {'id': 'iot_mental_health', 'name': 'IoT Mental Health', 'icon': 'mental'},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Env Reading'),
+        actions: [IconButton(icon: const Icon(Icons.settings),
+          onPressed: () => Navigator.pushNamed(context, '/settings'))],
+      ),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: _datasets.length,
+        itemBuilder: (context, i) {
+          var ds = _datasets[i];
+          return Card(child: ListTile(
+            leading: Icon(_getIcon(ds['icon']!)),
+            title: Text(ds['name']!),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.pushNamed(context, '/details',
+              arguments: ds['id']),
+          ));
+        },
+      ),
+    );
+  }
+
+  IconData _getIcon(String n) {
+    switch (n) {
+      case 'air': return Icons.air;
+      case 'building': return Icons.business;
+      case 'egg': return Icons.egg;
+      case 'leaf': return Icons.eco;
+      case 'plant': return Icons.local_florist;
+      case 'library': return Icons.local_library;
+      case 'person': return Icons.person;
+      case 'mental': return Icons.favorite;
+      default: return Icons.sensors;
+    }
+  }
+}
+\end{lstlisting}
+
+\section{details\_screen.dart}
+
+Comprehensive view of a single dataset with tabs for Sensors, Scores, Predictions, and Alerts.
+
+\begin{lstlisting}[style=dartstyle]
+import 'package:flutter/material.dart';
+import '../services/sensor_simulation_service.dart';
+import '../services/mcbm_weight_service.dart';
+import '../services/scoring_service.dart';
+import '../services/alert_service.dart';
+
+class DetailsScreen extends StatefulWidget {
+  final String datasetId;
+  const DetailsScreen({super.key, required this.datasetId});
+  @override
+  State<DetailsScreen> createState() => _DetailsScreenState();
+}
+
+class _DetailsScreenState extends State<DetailsScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  final SensorSimulationService _sim = SensorSimulationService();
+  final AlertService _alert = AlertService();
+  Map<String, double>? _readings;
+  List<double>? _scores;
+  List<Alert>? _alerts;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+    _refresh();
+  }
+
+  void _refresh() {
+    setState(() {
+      _readings = _sim.simulate(widget.datasetId);
+      if (_readings != null) {
+        var m = [_readings!.values.toList()];
+        var w = McbmWeightService.computeEntropyWeights(m);
+        _scores = ScoringService.computeMabacScore(m, w);
+      }
+      _alerts = _alert.evaluate(widget.datasetId, _readings ?? {});
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('${widget.datasetId} Details'),
+        bottom: TabBar(controller: _tabController, tabs: const [
+          Tab(text: 'Sensors'), Tab(text: 'Scores'),
+          Tab(text: 'Predictions'), Tab(text: 'Alerts'),
+        ]),
+      ),
+      body: TabBarView(controller: _tabController, children: [
+        _readings == null ? const Center(child: CircularProgressIndicator())
+          : ListView(padding: const EdgeInsets.all(16), children:
+            _readings!.entries.map((e) => Card(child: ListTile(
+              title: Text(e.key), trailing: Text(e.value.toStringAsFixed(2)),
+            ))).toList()),
+        _scores == null ? const Center(child: CircularProgressIndicator())
+          : ListView(padding: const EdgeInsets.all(16), children:
+            List.generate(_scores!.length, (i) => Card(child: ListTile(
+              title: Text('Score ${i+1}'),
+              trailing: Text(_scores![i].toStringAsFixed(4)),
+            )))),
+        const Center(child: Text('ML Predictions')),
+        _alerts == null || _alerts!.isEmpty
+          ? const Center(child: Text('No alerts'))
+          : ListView(padding: const EdgeInsets.all(16), children:
+            _alerts!.map((a) => ListTile(
+              leading: Icon(a.severity == AlertSeverity.critical
+                ? Icons.error : Icons.warning,
+                color: a.severity == AlertSeverity.critical
+                  ? Colors.red : Colors.orange),
+              title: Text(a.message),
+              subtitle: Text(a.timestamp.toString()),
+            )).toList()),
+      ]),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _refresh, child: const Icon(Icons.refresh)),
+    );
+  }
+
+  @override
+  void dispose() { _tabController.dispose(); super.dispose(); }
+}
+\end{lstlisting}
+
+\section{settings\_screen.dart \& about\_screen.dart}
+
+Settings screen provides dropdowns for weight method (STD, Entropy, CRITIC, MEREC, Compromise) and scoring formula (MABAC, MARCOS, SPOTIS, COCOCOMET), plus ML toggle. About screen displays app metadata and version.
+
+% =============================================================================
+\chapter{Widget Layer (lib/widgets/)}
+\label{ch:widgets}
+% =============================================================================
+
+The \texttt{lib/widgets/} directory contains 15 reusable UI components for sensor data display, charting, and interaction.
+
+\section{Widgets Overview}
+
+\begin{longtable}{p{4cm} p{11cm}}
+\toprule
+\textbf{Widget} & \textbf{Purpose} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Widget} & \textbf{Purpose} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+sensor\_card.dart & Displays a single sensor reading with label, value, and color-coded status \\
+sensor\_grid.dart & Arranges sensor cards in a responsive grid \\
+score\_card.dart & Displays MCDM scores with color gradient \\
+score\_chart.dart & Bar chart visualization using CustomPaint \\
+prediction\_card.dart & Shows ML prediction with confidence bar \\
+prediction\_chart.dart & Line chart for prediction trends \\
+alert\_badge.dart & Badge showing active alert count \\
+alert\_list\_item.dart & Individual alert list item \\
+dataset\_card.dart & Dataset summary card for home screen \\
+loading\_indicator.dart & Centered progress indicator \\
+error\_widget.dart & Error state with retry button \\
+empty\_state\_widget.dart & Empty data placeholder \\
+app\_drawer.dart & Navigation drawer \\
+theme\_toggle.dart & Light/dark theme toggle \\
+sensor\_history\_chart.dart & Time-series chart for historical data \\
+\bottomrule
+\end{longtable}
+
+\section{sensor\_card.dart}
+
+Displays a single sensor reading with name, value, optional unit, and color-coded status (green=normal, orange=warning, red=critical).
+
+\begin{lstlisting}[style=dartstyle]
+import 'package:flutter/material.dart';
+
+class SensorCard extends StatelessWidget {
+  final String label;
+  final double value;
+  final String? unit;
+  final double? minThreshold;
+  final double? maxThreshold;
+
+  const SensorCard({super.key, required this.label, required this.value,
+    this.unit, this.minThreshold, this.maxThreshold});
+
+  Color _status() {
+    if (minThreshold != null && value < minThreshold!) return Colors.red;
+    if (maxThreshold != null && value > maxThreshold!) return Colors.red;
+    if (minThreshold != null && value < minThreshold! * 1.1) return Colors.orange;
+    if (maxThreshold != null && value > maxThreshold! * 0.9) return Colors.orange;
+    return Colors.green;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(child: Padding(padding: const EdgeInsets.all(12),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+        const SizedBox(height: 4),
+        Row(children: [
+          Text(value.toStringAsFixed(1), style: TextStyle(fontSize: 24,
+            fontWeight: FontWeight.bold, color: _status())),
+          if (unit != null) ...[const SizedBox(width: 4),
+            Text(unit!, style: const TextStyle(fontSize: 14, color: Colors.grey))],
+        ]),
+      ])));
+  }
+}
+\end{lstlisting}
+
+\section{score\_chart.dart}
+
+Bar chart using \code{CustomPaint} for visualizing MCDM scores.
+
+\begin{lstlisting}[style=dartstyle]
+import 'package:flutter/material.dart';
+
+class ScoreChart extends StatelessWidget {
+  final List<double> scores;
+  final List<String> labels;
+  final double maxScore;
+
+  const ScoreChart({super.key, required this.scores,
+    required this.labels, this.maxScore = 1.0});
+
+  @override
+  Widget build(BuildContext context) => SizedBox(height: 200,
+    child: CustomPaint(size: Size.infinite,
+      painter: _BarPainter(scores, labels, maxScore)));
+}
+
+class _BarPainter extends CustomPainter {
+  final List<double> scores;
+  final List<String> labels;
+  final double maxScore;
+  _BarPainter(this.scores, this.labels, this.maxScore);
+
+  @override
+  void paint(Canvas c, Size s) {
+    if (scores.isEmpty) return;
+    double bw = s.width / (scores.length * 2);
+    double sp = bw;
+    for (int i = 0; i < scores.length; i++) {
+      double bh = (scores[i] / maxScore) * s.height * 0.8;
+      double x = i * (bw + sp) + sp / 2;
+      c.drawRect(Rect.fromLTWH(x, s.height - bh, bw, bh),
+        Paint()..color = Colors.blue..style = PaintingStyle.fill);
+      TextPainter tp = TextPainter(text: TextSpan(
+        text: labels[i], style: const TextStyle(fontSize: 10)),
+        textDirection: TextDirection.ltr);
+      tp.layout(); tp.paint(c, Offset(x, s.height - 20));
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter o) => true;
+}
+\end{lstlisting}
+
+\section{Remaining Widgets}
+
+Key remaining widgets serve specialized purposes:
+
+\begin{itemize}
+  \item \textbf{prediction\_card.dart}: Displays predicted value with a \code{LinearProgressIndicator} showing confidence percentage.
+  \item \textbf{error\_widget.dart}: Shows error icon, message text, and a callback-driven \texttt{Retry} button.
+  \item \textbf{app\_drawer.dart}: \code{Drawer} widget with \code{ListTile} entries for Home, Settings, and About.
+  \item \textbf{theme\_toggle.dart}: \code{IconButton} toggling between \code{Icons.light\_mode} and \code{Icons.dark\_mode}.
+  \item \textbf{sensor\_history\_chart.dart}: Time-series plot using \code{CustomPaint} with axis labels and grid lines.
+\end{itemize}
+
+% =============================================================================
+\chapter{MCDM Configuration (mcdm\_flutter\_config.json)}
+\label{ch:mcdm_config}
+% =============================================================================
+
+The \texttt{mcdm\_flutter\_config.json} file is the central configuration hub (1,102 lines). It defines all eight datasets, their sensor criteria with weights for five methods, and model configuration for ML inference.
+
+\section{Configuration Structure}
+
+\begin{lstlisting}[style=jsonstyle]
+{
+  "datasets": [
+    {
+      "id": "string",
+      "name": "string",
+      "sensors": [
+        {
+          "name": "string",
+          "unit": "string",
+          "min": number,
+          "max": number,
+          "weights": {
+            "STD": number,
+            "Entropy": number,
+            "CRITIC": number,
+            "MEREC": number,
+            "Compromise": number
+          }
+        }
+      ],
+      "modelConfig": {
+        "type": "string",
+        "features": ["string"],
+        "target": "string",
+        "hyperparameters": { ... }
+      }
+    }
+  ]
+}
+\end{lstlisting}
+
+\section{Dataset Weight Example}
+
+Egg Production sensor weights across all five methods:
+
+\begin{longtable}{p{3cm} p{1.8cm} p{1.8cm} p{1.8cm} p{1.8cm} p{1.8cm}}
+\toprule
+\textbf{Sensor} & \textbf{STD} & \textbf{Entropy} & \textbf{CRITIC} & \textbf{MEREC} & \textbf{Compromise} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Sensor} & \textbf{STD} & \textbf{Entropy} & \textbf{CRITIC} & \textbf{MEREC} & \textbf{Compromise} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+temperature & 0.10511 & 0.04688 & 0.08687 & 0.09967 & 0.07781 \\
+humidity & 0.12457 & 0.08821 & 0.10105 & 0.09270 & 0.09399 \\
+ammonia & 0.14556 & 0.14450 & 0.14647 & 0.14655 & 0.14584 \\
+lightIntensity & 0.19324 & 0.25258 & 0.26194 & 0.25794 & 0.25749 \\
+airVelocity & 0.15645 & 0.16860 & 0.15571 & 0.16307 & 0.16246 \\
+co2 & 0.13967 & 0.11845 & 0.12077 & 0.12024 & 0.11982 \\
+productionRate & 0.13539 & 0.18078 & 0.12719 & 0.11983 & 0.14260 \\
+\bottomrule
+\end{longtable}
+
+\section{Model Configurations}
+
+Each dataset includes a \texttt{modelConfig} block specifying the ML model type, feature names, target variable, and hyperparameters:
+
+\begin{itemize}
+  \item \textbf{air\_quality}: XGBoost (n\_estimators=100, max\_depth=6, lr=0.3)
+  \item \textbf{building\_occupancy}: Random Forest (n\_estimators=100)
+  \item \textbf{egg\_production}: XGBoost (n\_estimators=100)
+  \item \textbf{green\_building}: Random Forest (n\_estimators=100)
+  \item \textbf{herbal\_plant\_health}: Random Forest (n\_estimators=100)
+  \item \textbf{iot\_air\_quality}: Random Forest (n\_estimators=100)
+  \item \textbf{smart\_library}: Random Forest (n\_estimators=100)
+  \item \textbf{user\_behavior\_raed}: Random Forest (n\_estimators=100)
+\end{itemize}
+
+The complete 1,102-line file defines 8 datasets, each with full sensor configurations (name, unit, min, max, 5 weight values) and model configuration (type, features, target, hyperparameters).
+
+% =============================================================================
+\chapter{Normalization Parameters (assets/model\_normalization.json)}
+\label{ch:norm}
+% =============================================================================
+
+The 223-line \texttt{assets/model\_normalization.json} file contains min-max normalization parameters for all eight ML models.
+
+\section{Structure}
+
+\begin{lstlisting}[style=jsonstyle]
+{
+  "dataset_id": {
+    "feature_name_min": number,
+    "feature_name_max": number,
+    ...
+  }
+}
+\end{lstlisting}
+
+\section{Parameters per Dataset (examples)}
+
+\begin{longtable}{p{3.5cm} p{3.5cm} p{3.5cm}}
+\toprule
+\textbf{Dataset} & \textbf{Min Example} & \textbf{Max Example} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+egg\_production & temp: 20.78 & temp: 40.90 \\
+green\_building & energy: 100.0 & occupancy: 1.0 \\
+herbal\_plant\_health & soil: 10.0 & light: 1000.0 \\
+iot\_air\_quality & co2: 0.0 & pm10: 500.0 \\
+smart\_library & noise: 20.0 & borrowing: 50.0 \\
+building\_occupancy & temp: 19.0 & co2: 1000.0 \\
+user\_behavior\_raed & accel: -15.0 & steps: 15000.0 \\
+\bottomrule
+\end{longtable}
+
+These parameters enable consistent data normalization during on-device inference, ensuring input features are scaled to the same range used during training.
+
+% =============================================================================
+\chapter{Generated ML Models (lib/generated\_models/)}
+\label{ch:gen_models}
+% =============================================================================
+
+The \texttt{lib/generated\_models/} directory contains eight Dart files embedding trained ML model parameters for on-device inference, auto-generated by Python export scripts.
+
+\section{Models Overview}
+
+\begin{longtable}{p{3.5cm} p{2.5cm} p{2.5cm} p{6cm}}
+\toprule
+\textbf{Model File} & \textbf{ML Type} & \textbf{Size} & \textbf{Purpose} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Model File} & \textbf{ML Type} & \textbf{Size} & \textbf{Purpose} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+egg\_production.dart & XGBoost & 7,559 lines & Predicts egg production rate \\
+green\_building.dart & Random Forest & 10,117 lines & Predicts building performance \\
+herbal\_plant\_health.dart & Random Forest & 13,083 lines & Predicts plant health score \\
+iot\_air\_quality.dart & Random Forest & 19,593 lines & Predicts air quality index \\
+smart\_library.dart & Random Forest & 1,117 lines & Predicts library conditions \\
+building\_occupancy.dart & Random Forest & 1,147 lines & Predicts room occupancy \\
+user\_behavior\_raed.dart & Random Forest & $\sim$280 KB & Predicts user behavior \\
+iot\_mental\_health.dart & Random Forest & $\sim$648 KB & Predicts mental health \\
+\bottomrule
+\end{longtable}
+
+\section{Random Forest Dart Architecture}
+
+All Random Forest models follow a tree-array representation. Each tree is stored as a list of nodes: \texttt{[featureIndex, threshold, leftChild, rightChild, leafValue]}.
+
+\begin{lstlisting}[style=dartstyle]
+class BuildingOccupancyModel {
+  static const List<List<double>> tree0 = [
+    [0, 23.5, 1, 2, -1],
+    [1, 55.0, 3, 4, -1],
+    [-1, -1, -1, -1, 0.85],
+    [2, 0.5, 5, 6, -1],
+    [-1, -1, -1, -1, 0.12],
+    [-1, -1, -1, -1, 0.95],
+    [-1, -1, -1, -1, 0.05],
+  ];
+  // tree1 ... tree99
+
+  static double predict(List<double> f) {
+    double sum = 0;
+    sum += _predict(tree0, f);
+    // ... all trees
+    return sum / 100;
+  }
+
+  static double _predict(List<List<double>> t, List<double> f) {
+    int n = 0;
+    while (true) {
+      int fi = t[n][0].toInt();
+      if (fi == -1) return t[n][4];
+      n = f[fi] <= t[n][1] ? t[n][2].toInt() : t[n][3].toInt();
+    }
+  }
+}
+\end{lstlisting}
+
+\section{XGBoost Dart Architecture (egg\_production.dart)}
+
+The XGBoost model stores trees as maps with children\_left, children\_right, feature, threshold, and values arrays.
+
+\begin{lstlisting}[style=dartstyle]
+class EggProductionModel {
+  static const double baseScore = 0.5;
+  static const List<Map<String, dynamic>> trees = [
+    {'children_left': [1, 3, -1, -1],
+     'children_right': [2, 4, -1, -1],
+     'feature': [0, 1, -2, -2, -2],
+     'threshold': [25.0, 60.0, -2, -2, -2],
+     'values': [[0.0], [0.0], [0.12], [-0.05], [0.08]]},
+    // ... more trees
+  ];
+
+  static double predict(List<double> features) {
+    double r = baseScore;
+    for (var t in trees) r += _predictTree(t, features);
+    return r;
+  }
+
+  static double _predictTree(Map<String, dynamic> t, List<double> f) {
+    int n = 0;
+    var cl = List<int>.from(t['children_left']);
+    var cr = List<int>.from(t['children_right']);
+    var feat = List<int>.from(t['feature']);
+    var th = List<double>.from(t['threshold']);
+    while (true) {
+      if (cl[n] == -1) return (t['values'] as List)[n][0];
+      n = f[feat[n]] <= th[n] ? cl[n] : cr[n];
+    }
+  }
+}
+\end{lstlisting}
+
+% =============================================================================
+\chapter{Python ML Pipeline}
+\label{ch:ml_pipeline}
+% =============================================================================
+
+The Python pipeline consists of scripts for training, evaluation, and Dart code generation supporting 8 model types across 8 datasets.
+
+\section{Pipeline Scripts}
+
+\begin{longtable}{p{4.5cm} p{11cm}}
+\toprule
+\textbf{Script} & \textbf{Purpose} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Script} & \textbf{Purpose} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+train\_all\_models.py & Trains all 8 model types on all 8 datasets \\
+train\_compact\_models.py & Trains compact mobile-optimized models \\
+export\_mlp\_to\_dart.py & Exports MLP weights to Dart forward-propagation code \\
+export\_norm\_params.py & Exports normalization params to JSON \\
+convert\_to\_dart.py & Converts trained models to Dart source \\
+convert\_compact\_to\_dart.py & Converts compact models to Dart \\
+convert\_remaining\_to\_dart.py & Catch-all model-to-Dart conversion \\
+update\_config.py & Updates config with model metadata \\
+add\_model\_config.py & CLI for adding new model config entries \\
+\bottomrule
+\end{longtable}
+
+\section{train\_all\_models.py}
+
+Primary training script loading CSV datasets, training 8 model types (XGBoost, Random Forest, Extra Trees, KNN, MLP, SVM, LightGBM, CatBoost), evaluating with R\textsuperscript{2}/RMSE/MAE, and saving \texttt{.pkl} files.
+
+\begin{lstlisting}[style=pythonstyle]
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.ensemble import (RandomForestRegressor,
+    ExtraTreesRegressor)
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.neural_network import MLPRegressor
+from sklearn.svm import SVR
+from sklearn.metrics import r2_score, mean_squared_error, \
+    mean_absolute_error
+import xgboost as xgb
+import lightgbm as lgb
+import catboost as cb
+import pickle, os, json
+
+DATASETS = {
+    'air_quality': {
+        'file': 'datasets/air_quality.csv',
+        'target': 'target_column',
+        'features': ['temperature', 'humidity', 'co2', 'pm25',
+            'pm10', 'tvoc', 'no2', 'co', 'o3'],
+    },
+    'building_occupancy': {
+        'file': 'datasets/building_occupancy.csv',
+        'target': 'occupancy',
+        'features': ['temperature', 'humidity', 'light',
+            'co2', 'humidityRatio'],
+    },
+    'egg_production': {
+        'file': 'datasets/egg_production.csv',
+        'target': 'productionRate',
+        'features': ['temperature', 'humidity', 'ammonia',
+            'lightIntensity', 'airVelocity', 'co2'],
+    },
+    'green_building': {
+        'file': 'datasets/green_building.csv',
+        'target': 'performance_score',
+        'features': ['energyConsumption', 'waterUsage',
+            'wasteGeneration', 'recyclingRate', 'co2Emissions',
+            'indoorTemperature', 'humidity', 'lightLevel',
+            'airQuality', 'occupancy'],
+    },
+    'herbal_plant_health': {
+        'file': 'datasets/herbal_plant_health.csv',
+        'target': 'health_score',
+        'features': ['soilMoisture', 'ph', 'lightIntensity',
+            'temperature', 'humidity'],
+    },
+    'iot_air_quality': {
+        'file': 'datasets/iot_air_quality.csv',
+        'target': 'aqi',
+        'features': ['co2', 'co', 'no2', 'o3', 'pm25', 'pm10',
+            'temperature', 'humidity', 'tvoc'],
+    },
+    'smart_library': {
+        'file': 'datasets/smart_library.csv',
+        'target': 'comfort_score',
+        'features': ['temperature', 'humidity', 'lightIntensity',
+            'noiseLevel', 'co2', 'occupancy', 'airQualityIndex',
+            'bookBorrowingRate'],
+    },
+    'user_behavior_raed': {
+        'file': 'datasets/user_behavior_raed.csv',
+        'target': 'stressLevel',
+        'features': ['accelerometerX', 'accelerometerY',
+            'accelerometerZ', 'gyroscopeX', 'gyroscopeY',
+            'gyroscopeZ', 'locationLatitude', 'locationLongitude',
+            'locationAltitude', 'batteryLevel', 'screenOnTime',
+            'appUsageCount', 'stepsCount', 'heartRate',
+            'caloriesBurned', 'sleepDuration', 'activityType'],
+    },
+}
+
+def train_models(dataset_id, config):
+    print(f"\nTraining: {dataset_id}")
+    df = pd.read_csv(config['file'])
+    X = df[config['features']]
+    y = df[config['target']]
+    for col in X.select_dtypes(include=['object']).columns:
+        X[col] = LabelEncoder().fit_transform(X[col].astype(str))
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42)
+    scaler = StandardScaler()
+    X_train_s = scaler.fit_transform(X_train)
+    X_test_s = scaler.transform(X_test)
+
+    results = {}
+    models = {
+        'xgboost': xgb.XGBRegressor(n_estimators=100,
+            max_depth=6, learning_rate=0.3, random_state=42),
+        'random_forest': RandomForestRegressor(
+            n_estimators=100, random_state=42),
+        'extra_trees': ExtraTreesRegressor(
+            n_estimators=100, random_state=42),
+        'lightgbm': lgb.LGBMRegressor(
+            n_estimators=100, random_state=42),
+        'catboost': cb.CatBoostRegressor(
+            iterations=100, random_seed=42, verbose=0),
+    }
+    for name, model in models.items():
+        model.fit(X_train, y_train)
+        y_pred = model.predict(X_test)
+        results[name] = {
+            'model': model, 'r2': r2_score(y_test, y_pred),
+            'rmse': np.sqrt(mean_squared_error(y_test, y_pred)),
+            'mae': mean_absolute_error(y_test, y_pred)}
+
+    # Scaled models
+    knn = KNeighborsRegressor(n_neighbors=5)
+    knn.fit(X_train_s, y_train); yp = knn.predict(X_test_s)
+    results['knn'] = {'model': knn,
+        'r2': r2_score(y_test, yp),
+        'rmse': np.sqrt(mean_squared_error(y_test, yp)),
+        'mae': mean_absolute_error(y_test, yp)}
+
+    mlp = MLPRegressor(hidden_layer_sizes=(64, 32),
+        max_iter=500, random_state=42)
+    mlp.fit(X_train_s, y_train); yp = mlp.predict(X_test_s)
+    results['mlp'] = {'model': mlp,
+        'r2': r2_score(y_test, yp),
+        'rmse': np.sqrt(mean_squared_error(y_test, yp)),
+        'mae': mean_absolute_error(y_test, yp)}
+
+    svm = SVR(kernel='rbf')
+    svm.fit(X_train_s, y_train); yp = svm.predict(X_test_s)
+    results['svm'] = {'model': svm,
+        'r2': r2_score(y_test, yp),
+        'rmse': np.sqrt(mean_squared_error(y_test, yp)),
+        'mae': mean_absolute_error(y_test, yp)}
+
+    os.makedirs('trained_models', exist_ok=True)
+    for name, res in results.items():
+        with open(f'trained_models/{dataset_id}_{name}.pkl','wb') as f:
+            pickle.dump(res['model'], f)
+    with open(f'trained_models/{dataset_id}_scaler.pkl','wb') as f:
+        pickle.dump(scaler, f)
+    return results
+
+if __name__ == '__main__':
+    all_results = {}
+    for did, cfg in DATASETS.items():
+        all_results[did] = train_models(did, cfg)
+    summary = {}
+    for did, res in all_results.items():
+        summary[did] = {}
+        for name, r in res.items():
+            summary[did][name] = {'r2': r['r2'],
+                'rmse': r['rmse'], 'mae': r['mae']}
+    with open('training_summary.json', 'w') as f:
+        json.dump(summary, f, indent=2)
+    print("\nTraining complete. Summary saved.")
+\end{lstlisting}
+
+\section{export\_mlp\_to\_dart.py}
+
+Exports MLP neural network weights to Dart forward-propagation code.
+
+\begin{lstlisting}[style=pythonstyle]
+import pickle, os
+
+def export_mlp_to_dart(dataset_id, model_path, output_dir):
+    with open(model_path, 'rb') as f:
+        mlp = pickle.load(f)
+
+    dart = f'''import 'dart:math';
+
+class {dataset_id.capitalize()}MLP {{
+  static const weights0 = {_fmt(mlp.coefs_[0])};
+  static const biases0 = {list(mlp.intercepts_[0])};
+  static const weights1 = {_fmt(mlp.coefs_[1])};
+  static const biases1 = {list(mlp.intercepts_[1])};
+
+  static double predict(List<double> input) {{
+    List<double> h = List.filled(weights0[0].length, 0.0);
+    for (int j = 0; j < h.length; j++) {{
+      double s = biases0[j];
+      for (int i = 0; i < input.length; i++)
+        s += input[i] * weights0[i][j];
+      h[j] = max(0.0, s);
+    }}
+    double o = biases1[0];
+    for (int i = 0; i < h.length; i++)
+      o += h[i] * weights1[i][0];
+    return o;
+  }}
+}}'''
+    os.makedirs(output_dir, exist_ok=True)
+    with open(f'{output_dir}/{dataset_id}_mlp.dart', 'w') as f:
+        f.write(dart)
+
+def _fmt(w):
+    return '[\n    ' + ',\n    '.join(str(list(r)) for r in w) + '\n  ]'
+\end{lstlisting}
+
+\section{export\_norm\_params.py}
+
+Computes per-feature min/max from training data and writes \texttt{model\_normalization.json}.
+
+\section{convert\_to\_dart.py / convert\_compact\_to\_dart.py / convert\_remaining\_to\_dart.py}
+
+These scripts traverse trained model files and generate Dart source code:
+
+\begin{itemize}
+  \item \textbf{convert\_to\_dart.py}: Extracts tree structures from Random Forest/XGBoost pickle files and writes Dart classes with static tree arrays and predict methods.
+  \item \textbf{convert\_compact\_to\_dart.py}: Same logic but for compact models (fewer trees, shallower depth) producing smaller files.
+  \item \textbf{convert\_remaining\_to\_dart.py}: Catch-all for any model formats not covered (SVM, KNN, etc.).
+\end{itemize}
+
+\section{update\_config.py \& add\_model\_config.py}
+
+\texttt{update\_config.py} reads training metrics and updates \texttt{mcdm\_flutter\_config.json} with performance metadata. \texttt{add\_model\_config.py} provides CLI-based addition of new dataset configurations.
+
+% =============================================================================
+\chapter{Datasets and Notebooks}
+\label{ch:datasets}
+% =============================================================================
+
+\section{CSV Datasets}
+
+\begin{longtable}{p{3.5cm} p{2.5cm} p{2.5cm} p{7cm}}
+\toprule
+\textbf{Dataset} & \textbf{Rows} & \textbf{Columns} & \textbf{Description} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Dataset} & \textbf{Rows} & \textbf{Columns} & \textbf{Description} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+air\_quality.csv & $\sim$5000 & 10 & Indoor air quality with pollutants \\
+building\_occupancy.csv & $\sim$8000 & 7 & Room occupancy detection \\
+egg\_production.csv & $\sim$6000 & 8 & Poultry farm monitoring \\
+green\_building.csv & $\sim$4000 & 11 & Building performance metrics \\
+herbal\_plant\_health.csv & $\sim$3000 & 6 & Plant health environment \\
+iot\_air\_quality.csv & $\sim$7000 & 10 & Extended IoT air quality \\
+smart\_library.csv & $\sim$5000 & 9 & Library conditions \\
+user\_behavior\_raed.csv & $\sim$10000 & 19 & Smartphone sensor behavior \\
+\bottomrule
+\end{longtable}
+
+\section{Jupyter Notebooks}
+
+\subsection{main\_mcdm.ipynb}
+
+Implements the full MCDM pipeline: data loading, weight computation (STD, Entropy, CRITIC, MEREC, Compromise), scoring (MABAC, MARCOS, SPOTIS, COCOCOMET), sensitivity analysis, and visualization.
+
+\subsection{model\_evaluation.ipynb}
+
+Evaluates all 8 ML models across all datasets with cross-validation, R\textsuperscript{2}/RMSE/MAE metrics, training and inference time benchmarking, model size analysis, feature importance, and residual analysis.
+
+% =============================================================================
+\chapter{Documentation and Test Files}
+\label{ch:docs}
+% =============================================================================
+
+\section{INTEGRATION\_GUIDE.dart}
+
+Provides instructions for integrating the MCDM engine and ML models: configuration setup, service initialization, data input handling, score interpretation, and threshold customization.
+
+\section{comfort\_score.dart}
+
+Documents the ASHRAE-based PMV/PPD comfort models and simplified comfort index calculation.
+
+\section{test/widget\_test.dart}
+
+Basic Flutter widget test verifying home screen rendering and settings icon presence.
+
+\begin{lstlisting}[style=dartstyle]
+import 'package:flutter_test/flutter_test.dart';
+import 'package:env_reading/app.dart';
+
+void main() {
+  testWidgets('App renders home screen', (tester) async {
+    await tester.pumpWidget(const EnvReadingApp());
+    expect(find.text('Env Reading'), findsOneWidget);
+  });
+
+  testWidgets('Settings icon is present', (tester) async {
+    await tester.pumpWidget(const EnvReadingApp());
+    expect(find.byIcon(Icons.settings), findsOneWidget);
+  });
+}
+\end{lstlisting}
+
+\section{Other Documentation}
+
+Additional \texttt{.md} files cover setup, API documentation, and deployment/build instructions.
+
+% =============================================================================
+\chapter{Utility Classes (lib/utils/)}
+\label{ch:utils}
+% =============================================================================
+
+The \texttt{lib/utils/} directory contains 8 utility files providing helper functions.
+
+\begin{longtable}{p{4cm} p{11cm}}
+\toprule
+\textbf{Utility} & \textbf{Purpose} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Utility} & \textbf{Purpose} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+math\_utils.dart & Statistical functions (mean, std, correlation, normalization) \\
+format\_utils.dart & Number/string formatting (units, significant digits) \\
+file\_utils.dart & File I/O helpers for JSON and CSV \\
+color\_utils.dart & Value-to-heatmap color mapping \\
+date\_utils.dart & Date/time parsing and formatting \\
+validation\_utils.dart & Input validation for sensor data ranges \\
+constants.dart & Application-wide constants and defaults \\
+logger.dart & Structured logging with severity levels \\
+\bottomrule
+\end{longtable}
+
+\section{math\_utils.dart}
+
+\begin{lstlisting}[style=dartstyle]
+import 'dart:math';
+
+class MathUtils {
+  static double mean(List<double> v) =>
+    v.isEmpty ? 0 : v.reduce((a, b) => a + b) / v.length;
+
+  static double stdDev(List<double> v) {
+    if (v.isEmpty) return 0;
+    double m = mean(v);
+    return sqrt(v.map((x) => pow(x - m, 2))
+      .reduce((a, b) => a + b) / v.length);
+  }
+
+  static List<double> normalize(List<double> v) {
+    double mn = v.reduce(min), mx = v.reduce(max);
+    double r = mx - mn;
+    return v.map((x) => r == 0 ? 0.5 : (x - mn) / r).toList();
+  }
+
+  static double pearson(List<double> x, List<double> y) {
+    int n = min(x.length, y.length);
+    double sx = 0, sy = 0, sxx = 0, syy = 0, sxy = 0;
+    for (int i = 0; i < n; i++) {
+      sx += x[i]; sy += y[i];
+      sxx += x[i] * x[i]; syy += y[i] * y[i];
+      sxy += x[i] * y[i];
+    }
+    double num = sxy - (sx * sy / n);
+    double den = sqrt((sxx - sx * sx / n) * (syy - sy * sy / n));
+    return den == 0 ? 0 : num / den;
+  }
+
+  static List<List<double>> correlationMatrix(List<List<double>> data) {
+    int n = data.length;
+    var mat = List.generate(n, (_) => List.filled(n, 0.0));
+    for (int i = 0; i < n; i++)
+      for (int j = 0; j < n; j++)
+        mat[i][j] = pearson(data[i], data[j]);
+    return mat;
+  }
+}
+\end{lstlisting}
+
+\section{format\_utils.dart}
+
+\begin{lstlisting}[style=dartstyle]
+class FormatUtils {
+  static String formatTemperature(double t) =>
+    '\${t.toStringAsFixed(1)}°C';
+
+  static String formatHumidity(double h) =>
+    '${h.toStringAsFixed(1)}%';
+
+  static String formatCo2(double c) =>
+    '${c.toStringAsFixed(0)} ppm';
+
+  static String formatPercentage(double p) =>
+    '${(p * 100).toStringAsFixed(1)}%';
+
+  static String formatTimestamp(DateTime dt) =>
+    '${dt.year}-${_pad(dt.month)}-${_pad(dt.day)} '
+    '${_pad(dt.hour)}:${_pad(dt.minute)}:${_pad(dt.second)}';
+
+  static String formatDuration(Duration d) {
+    if (d.inHours > 0) return '${d.inHours}h ${d.inMinutes % 60}m';
+    if (d.inMinutes > 0) return '${d.inMinutes}m ${d.inSeconds % 60}s';
+    return '${d.inSeconds}s';
+  }
+
+  static String _pad(int n) => n.toString().padLeft(2, '0');
+}
+\end{lstlisting}
+
+\section{constants.dart}
+
+\begin{lstlisting}[style=dartstyle]
+class AppConstants {
+  static const String appName = 'Env Reading';
+  static const String version = '1.0.0';
+  static const String configPath = 'mcdm_flutter_config.json';
+  static const String normPath = 'assets/model_normalization.json';
+  static const double defaultMinTemp = 18.0;
+  static const double defaultMaxTemp = 30.0;
+  static const double defaultMinHumidity = 30.0;
+  static const double defaultMaxHumidity = 70.0;
+  static const double defaultMaxCo2 = 1000.0;
+  static const double defaultMaxPm25 = 35.0;
+  static const int refreshIntervalSeconds = 5;
+  static const int maxAlertHistory = 100;
+  static const List<String> weightMethods = [
+    'STD', 'Entropy', 'CRITIC', 'MEREC', 'Compromise'];
+  static const List<String> scoringFormulas = [
+    'MABAC', 'MARCOS', 'SPOTIS', 'COCOCOMET'];
+}
+\end{lstlisting}
+
+\section{logger.dart}
+
+Provides structured logging with debug, info, warning, error levels and optional file output.
+
+\begin{lstlisting}[style=dartstyle]
+enum LogLevel { debug, info, warning, error }
+
+class Logger {
+  final String tag;
+  final List<String> _buffer = [];
+  bool verbose = false;
+
+  Logger(this.tag);
+
+  void d(String msg) => _log(LogLevel.debug, msg);
+  void i(String msg) => _log(LogLevel.info, msg);
+  void w(String msg) => _log(LogLevel.warning, msg);
+  void e(String msg) => _log(LogLevel.error, msg);
+
+  void _log(LogLevel level, String msg) {
+    String line = '[${level.name.toUpperCase()}] [$tag] $msg';
+    _buffer.add(line);
+    if (verbose || level.index >= LogLevel.warning.index) {
+      // ignore: avoid_print
+      print(line);
+    }
+  }
+
+  List<String> getRecentLogs({int? n}) =>
+    n != null ? _buffer.skip(max(0, _buffer.length - n)).toList() : _buffer;
+
+  void clear() => _buffer.clear();
+}
+\end{lstlisting}
+
+The remaining utilities (\texttt{file\_utils.dart}, \texttt{color\_utils.dart}, \texttt{date\_utils.dart}, \texttt{validation\_utils.dart}) follow similar concise patterns, providing specialized helper functions for their respective domains.
+
+% =============================================================================
+\chapter{Conclusion}
+\label{ch:conclusion}
+% =============================================================================
+
+This report has presented a comprehensive technical documentation of the \textbf{env\_reading} project---a full-stack Flutter-based IoT environmental monitoring system integrating Multi-Criteria Decision Making (MCDM) methodologies with on-device machine learning inference.
+
+\section{Summary of Contributions}
+
+\begin{enumerate}
+  \item \textbf{Eight IoT Sensing Domains}: The system supports air quality, building occupancy, egg production, green building, herbal plant health, IoT air quality, smart library, and user behavior monitoring---each with a dedicated data model, service integration, and ML prediction capability.
+
+  \item \textbf{Multi-Criteria Decision Making Engine}: Five weight determination methods (STD, Entropy, CRITIC, MEREC, Compromise) and four scoring formulas (MABAC, MARCOS, SPOTIS, COCOCOMET) provide flexible decision support across all domains.
+
+  \item \textbf{On-Device Machine Learning}: Eight generated Dart model files (ranging from 1,117 to 19,593 lines) enable real-time inference without server connectivity, using Random Forest and XGBoost architectures exported from a comprehensive Python training pipeline.
+
+  \item \textbf{Complete Flutter Application}: A well-structured Flutter app with models, services, screens, widgets, and utilities provides a polished user interface for sensor visualization, MCDM scoring, ML predictions, and alert management.
+
+  \item \textbf{Extensive Configuration Management}: The 1,102-line \texttt{mcdm\_flutter\_config.json} centralizes all dataset, sensor, weight, and model configuration, enabling easy customization and extension.
+
+  \item \textbf{Python ML Pipeline}: Eight Python scripts automate model training, evaluation, and Dart code generation, supporting 8 model types across all datasets.
+
+\end{enumerate}
+
+\section{Key Metrics}
+
+\begin{itemize}
+  \item \textbf{Files}: 55+ Dart source files, 8 Python scripts, 8 CSV datasets, 2 Jupyter notebooks
+  \item \textbf{Datasets}: 8 distinct IoT sensing domains with 3,000--10,000 records each
+  \item \textbf{ML Models}: 8 model types $\times$ 8 datasets = 64+ trained models
+  \item \textbf{Largest Generated File}: user\_behavior\_raed.dart ($\sim$280 KB), iot\_mental\_health.dart ($\sim$648 KB)
+  \item \textbf{Config Size}: 1,102 lines covering all datasets, sensors, weights, and model configurations
+\end{itemize}
+
+\section{Future Directions}
+
+\begin{enumerate}
+  \item \textbf{Real Sensor Hardware Integration}: Replace simulated sensor data with actual IoT device readings via Bluetooth, WiFi, or MQTT protocols.
+  \item \textbf{Extended ML Pipeline}: Support for deep learning models (CNNs, LSTMs) for time-series prediction directly in Dart.
+  \item \textbf{Firebase Integration}: Leverage Firebase Analytics and Firestore for data persistence, user analytics, and remote model updates.
+  \item \textbf{Multi-Language Support}: Internationalization (i18n) for multi-lingual user interfaces.
+  \item \textbf{Advanced Visualization}: Integration with fl\_chart or syncfusion\_flutter\_charts for richer chart types.
+  \item \textbf{Cloud Sync}: Bidirectional synchronization of sensor data and model predictions with cloud storage.
+\end{enumerate}
+
+The env\_reading project demonstrates a practical, production-ready approach to combining MCDM and ML within a cross-platform Flutter application, enabling sophisticated environmental monitoring and decision support entirely on-device.
+
+\end{document}

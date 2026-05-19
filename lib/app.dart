@@ -31,7 +31,6 @@ class _AppState extends State<App> {
       secondary: const Color(0xFF03B5AA),
       tertiary: const Color(0xFFFFB703),
       surface: Colors.white,
-      background: const Color(0xFFF4F7F4),
     );
 
     return MaterialApp(
@@ -41,7 +40,7 @@ class _AppState extends State<App> {
         colorScheme: colorScheme,
         useMaterial3: true,
         textTheme: GoogleFonts.spaceGroteskTextTheme(),
-        scaffoldBackgroundColor: colorScheme.background,
+        scaffoldBackgroundColor: const Color(0xFFF4F7F4),
         cardTheme: CardThemeData(
           color: colorScheme.surface,
           elevation: 0,
